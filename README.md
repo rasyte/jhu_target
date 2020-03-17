@@ -1,8 +1,8 @@
 # Clue_Dunit_Client_Server
 
-## Initial Instructions
+## Initial Instructions (Work in Progress)
 
-1. Download Visual Studio Code
+1. Download Visual Studio (for Mac) (or the Windows version) (NOT Visual Studio Code)
 2. Navigate to solution "clueless.sln" and open the file (with Visual Studio Code)
 2. Select project > build to build the client and server.
 
