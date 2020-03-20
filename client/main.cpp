@@ -1,4 +1,8 @@
 
+
+#define WIN32_LEAN_AND_MEAN
+
+
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -14,6 +18,13 @@
 #include <windows.h>
 #include <fcntl.h>
 #include <io.h>
+
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <time.h>
+
+#pragma comment(lib, "ws2_32.lib")
+
 #endif
 
 #include "mainWnd.h"
@@ -21,12 +32,24 @@
 #include "logger.h"
 
 const char* defLogFile = ".\\client_exec.log";
+const char* version = "0.0.5";
+
+void showUsage(const char*);
+void showVersion(const char*);
 
 void allocConsole();
+bool initWinSock();
+bool deinitWinsock();
+int networkError();
 
 // issues
 // (1) modifying network setting are not persisited to the registry
 // (2) gear-icon is not displayed on the log-in dialog, settings button
+// (3) change socket code to support IPv4/IPv6
+// (4) add error level to logger
+
+enum g_errorLevel { DBG_DEBUG = 0, DBG_INFO, DBG_WARNING, DBG_ERROR, DBG_FATAL };
+int g_dbgLevel = DBG_FATAL;
 
 int main(int argc, char *argv[])
 {
@@ -46,45 +69,90 @@ int main(int argc, char *argv[])
         switch (c)
         {
             case 'd':                                 // setting debug level
+                g_dbgLevel -= 1;                
+                if (g_dbgLevel < 0) g_dbgLevel = 0;
                 break;
             case 'n':                                 // disable login for testing
                 bNoLogin = true;
+                break;
             case 'l':                                 // setting custom log location
+                logFile = new char[strlen(optarg)+1];
+                memset((void*)logFile, '\0', strlen(optarg) + 1);
+                strcpy(logFile, optarg);
                 break;
             case 'h':                                 // displaying help and exiting
-                break;
+                showUsage(argv[0]);
+                exit(0);
             case 'v':                                 // displaying version and information
-                break;
+                showVersion(argv[0]);
+                exit(0);
             case '?':                                 // unknown switch or error
             default:                                  // fall-through is expected
                 fprintf(stderr, "unexpected flag %c", c);
+                showUsage(argv[0]);
         }
     }
+
 
     // set up logging, placed here incase default logging name was changed on cmd-line.
     if (nullptr == logFile) logFile = const_cast<char*>(defLogFile);
     CLogger::getInstance(logFile);                    // get logging up and running .....
     CLogger::getInstance()->LogMessage("Client starting up");
 
-    loginDlg  dlg(nullptr, &setting);
-    if (bNoLogin || QDialog::Accepted == dlg.exec())     // display login dialog
+    if (initWinSock())                                       // insure WinSock is setup on Windows
     {
-        QString qstrUid = dlg.getUid();
-        QString qstrPwd = dlg.getPwd();
+        loginDlg  dlg(nullptr, &setting);
+        if (bNoLogin || QDialog::Accepted == dlg.exec())     // display login dialog
+        {
+            QString qstrUid = dlg.getUid();
+            QString qstrPwd = dlg.getPwd();
 
-        mainWnd gameWnd(qstrUid, qstrPwd);               // main game window 
-        // TODO : clear cred data here...
-        gameWnd.show();
-        nRet =  theApp.exec();
+            mainWnd gameWnd(qstrUid, qstrPwd);               // main game window 
+            // TODO : clear cred data here...
+            gameWnd.show();
+            nRet = theApp.exec();
+        }
+        else
+        {
+            CLogger::getInstance()->LogMessage("User cancelled, exitting\n");
+        }
     }
     else
     {
-        CLogger::getInstance()->LogMessage("User cancelled, exitting\n");
+        CLogger::getInstance()->LogMessage("Can not initialize WinSock");
     }
+
+    deinitWinsock();
+
 
     CLogger::delInstance();
 
     return nRet;
+}
+
+
+
+// dnl:hv
+void showUsage(const char* name)
+{
+    std::cout << name << "A client for the clue-less game.    " << std::endl;
+    std::cout << "Usage: " << name << "[options]              " << std::endl;
+    std::cout << "options:                                    " << std::endl;
+    std::cout << "d          increase the logging output,     " << std::endl;
+    std::cout << "           can be used five times           " << std::endl;
+    std::cout << "n          bypassing login into server      " << std::endl;
+    std::cout << "l <file>   use <file> as custom logging file" << std::endl;
+    std::cout << "           instead of .\\client_exec.log    " << std::endl;
+    std::cout << "h          display this screen and exit     " << std::endl;
+    std::cout << "v          show version info and exit       " << std::endl;
+}
+
+
+
+void showVersion(const char* name)
+{
+    std::cout << name << "A client for the clue-less game.    " << std::endl;
+    std::cout << "Version: " << version << std::endl;
 }
 
 
@@ -131,3 +199,73 @@ void allocConsole()
 
 }
 #endif
+
+
+bool initWinSock()
+{
+    bool      bRet = false;
+#ifdef __WIN
+    WORD      wVerReq;
+    int       nRet = 0;
+
+    wVerReq = MAKEWORD(2, 2);
+    WSADATA   wsaData;
+
+    if (0 == (nRet = WSAStartup(wVerReq, &wsaData)))   // return zero on success...only MS would return false on success
+    {
+        if ((LOBYTE(wsaData.wVersion) == 2) && (HIBYTE(wsaData.wVersion) == 2))
+        {
+            bRet = true;
+        }
+        else
+        {
+            std::cout << "Unable to find acceptable winsock dll" << std::endl;
+            WSACleanup();
+        }
+    }
+    else
+    {
+        std::cout << "WSAFailed, error is: " << nRet << std::endl;
+    }
+#else
+    bRet = true;
+#endif
+
+    return bRet;
+}
+
+
+bool deinitWinsock()
+{
+    bool  bRet = false;
+
+#ifdef __WIN
+    if (0 == WSACleanup())
+    {
+        bRet = true;
+    }
+    else
+    {
+        CLogger::getInstance()->LogMessage("Failed to cleanup WSACleanup, %d\n", WSAGetLastError());
+        bRet = false;
+    }
+#else                 
+    bRet = true;       // stub-out function on Linux,                   
+#endif
+
+    return bRet;
+}
+
+
+int networkError()
+{
+    int nRet = 0;
+
+#ifdef __WIN
+    nRet = WSAGetLastError();
+#else
+    nRet = errno;
+#endif
+
+    return nRet;
+}
