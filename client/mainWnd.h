@@ -13,6 +13,9 @@ public:
     mainWnd(QString, QString, QWidget *parent = Q_NULLPTR);
 
 
+private slots:
+    void errorString(QString);
+
 private:
     void setupUI();
     void createActions();
