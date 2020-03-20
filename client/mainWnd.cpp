@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QApplication>
 #include <QTextEdit>
+#include <QMessageBox>
 
 #include "mainWnd.h"
 #include "gameWorker.h"
@@ -112,7 +113,7 @@ void mainWnd::setupUI()
     line1->setFrameShadow(QFrame::Sunken);
 
 
-    // bild second note-book page...
+    // build second note-book page...
     // build rooms group box
     grpBoxRooms = new QGroupBox(centralWidget);
     grpBoxRooms->setObjectName(QString::fromUtf8("grpBoxRooms"));
@@ -225,6 +226,15 @@ void mainWnd::createWorker()
     connect(pThread, SIGNAL(started()), pWorker, SLOT(process()));
     connect(pThread, SIGNAL(finished()), pThread, SLOT(deleteLater()));
 
+
     pThread->start();                               // start the thread running
 
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// private slots:
+void mainWnd::errorString(QString msg)
+{
+    QMessageBox::critical(this, "Error", msg);
 }
