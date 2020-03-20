@@ -15,7 +15,7 @@ class gameWorker : public QObject
     Q_OBJECT
 
 public:
-    gameWorker();
+    gameWorker(char* serverIP, short sPort);
     ~gameWorker();
 
     enum CMDS { CMD_HRT_BEAT = 0, CMD_UPDATE_STATE, CMD_SUGGEST, CMD_ACCUSE, CMD_INIT, CMD_PLAYER_JOIN, CMD_SHUTDOWN};
@@ -30,6 +30,8 @@ signals:
 
 private:
     bool     m_bRun;
+    char*    m_sIP;
+    short    m_sPort;
     SOCKET   m_soc;               // socket we talk to the server on.
 
 
