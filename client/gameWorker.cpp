@@ -10,16 +10,23 @@ const int HDR_LEN = 3;                         // out message header length
 
 extern int networkError();
 
-gameWorker::gameWorker()
+gameWorker::gameWorker(char* serverIP, short sPort): m_sIP(nullptr), m_sPort(-1)
 {
     CLogger::getInstance()->LogMessage("gameWorker constructor");
     
-
+    if (serverIP != nullptr)
+    {
+        m_sIP = new char[strlen(serverIP) + 1];
+        memset((void*)m_sIP, '/0', strlen(serverIP) + 1);
+        strcpy(m_sIP, serverIP);
+    }
+    if(sPort > 0) m_sPort = sPort;
 }
 
 gameWorker::~gameWorker()
 {
     CLogger::getInstance()-> LogMessage("gameWorker destructor");
+    if (m_sIP != nullptr) delete[] m_sIP;
 }
 
 void gameWorker::process()
@@ -137,18 +144,35 @@ void gameWorker::process()
 bool gameWorker::connectServer()
 {
     bool    bRet = false;
+    QString qstrServer;
+    short   sPort;
     CLogger::getInstance()->LogMessage("attempting to connect to server");
 
     if (-1 != (m_soc = socket(AF_INET, SOCK_STREAM, 0)))
     {
         // get server address/port from settings .... see note in main about dynamically updateing settings.
         QSettings  setting("JHUProj", "clue-less");
-        QString m_qstrServer = setting.value("server", "").toString();
-        short sPort = setting.value("port", "").toString().toShort();
+        if (m_sIP == nullptr)
+        {
+            qstrServer = setting.value("server", "").toString();
+        }
+        else
+        {
+            qstrServer = QString(m_sIP);
+        }
+
+        if (m_sPort = -1)
+        {
+            sPort = setting.value("port", "").toString().toShort();
+        }
+        else
+        {
+            sPort = m_sPort;
+        }
 
         struct sockaddr_in  serverAddr;
         serverAddr.sin_family = AF_INET;
-        serverAddr.sin_addr.s_addr = inet_addr(m_qstrServer.toStdString().c_str());
+        serverAddr.sin_addr.s_addr = inet_addr(qstrServer.toStdString().c_str());
         serverAddr.sin_port = htons(sPort);
 
         if (-1 != ::connect(m_soc, (const sockaddr*)&serverAddr, sizeof(serverAddr)))
