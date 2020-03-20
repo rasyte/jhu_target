@@ -17,12 +17,12 @@ const char* lpszRooms[] = {"Hall", "Lounge", "Dining Room", "Kitchen", "Ball Roo
 const char* lpszWeapons[] = {"Knife", "Candlestick", "Revolver", "Rope", "Lead Pipe", "Wrench"};
 
 
-mainWnd::mainWnd(QString qstrUid, QString qstrPwd, QWidget *parent) : QMainWindow(parent)
+mainWnd::mainWnd(QString qstrUid, QString qstrPwd, char* serverIP, short sPort, QWidget *parent) : QMainWindow(parent)
 {
     setupUI();
     createActions();
     createMenus();
-    createWorker();
+    createWorker(serverIP,sPort);
 
 
     // TODO : check to see if we can chat to server...
@@ -213,10 +213,10 @@ void mainWnd::createMenus()
 
 }
 
-void mainWnd::createWorker() 
+void mainWnd::createWorker(char* sIP, short sPort) 
 {
     QThread* pThread = new QThread;                 // build communication thread....
-    gameWorker* pWorker = new gameWorker();
+    gameWorker* pWorker = new gameWorker(sIP, sPort);
     pWorker->moveToThread(pThread);
 
     // set up signal/slot connections 
