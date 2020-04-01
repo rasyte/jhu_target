@@ -9,6 +9,9 @@
 4. Setup Microsoft Visual Studio Community 2017 to use "msvc2017_64"
     * In Visual Studio look for the menu "QT VS Tools" And navigae to QT Options > Qt Versions > Name: "msvc2017_64"
 
+## Note: George's GitHub repo:
+https://github.com/thurizas/jhu_project
+
 ## Initial Instructions (Work in Progress)
 
 1. Open Visual Studio Community 2017, navigate to solution "clueless.sln" and open the file (with Visual Studio Code)
