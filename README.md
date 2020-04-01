@@ -8,6 +8,7 @@
 3. Download Qt 5.12.3: 
 4. Setup Microsoft Visual Studio Community 2017 to use "msvc2017_64"
     * In Visual Studio look for the menu "QT VS Tools" And navigae to QT Options > Qt Versions > Name: "msvc2017_64"
+5. Ubuntu 16.04 & g++ version 5.4.0
 
 ## Note: George's GitHub repo:
 https://github.com/thurizas/jhu_project
