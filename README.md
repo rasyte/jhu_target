@@ -22,7 +22,8 @@ https://github.com/thurizas/jhu_project
 Notes from George: "There is a solution file at the top level (clueless.sln) use Visual Studio 2017 to open the solution, and the select project->build or ctrl+shift B (if you left the key bindings at default)  This will build both the client and the server.  However, because Microsoft can't touch something without breaking it (sorry Rasa), the server will not run on Windows.  The included make file will allow the server to be build and run on Linux.  Note 1: the server is a command line. Note 2: While it will build with cygwin, I do not believe it will run on Windows. 7:48 The issue is the Microsoft choose to not allow 'select' to be able to multiplex on the command line, and I use this to be able to control the server when it is running."
 
 ## Launch the Client
-1. Launching the client (run as "client.exe -d -n -s <server_IP_address> -p 1337") 
+1. Navigate to the client build, under <repository_folder>/x64/Debug/
+2. Launching the client from the command line (run as "client.exe -d -n -s <server_IP_address> -p 1337") 
 
 ## Launch the Server
 1. Running the server on a Linux machine (run as clserver)
