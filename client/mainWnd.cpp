@@ -1,4 +1,3 @@
-
 #include <QThread>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -237,4 +236,61 @@ void mainWnd::createWorker(char* sIP, short sPort)
 void mainWnd::errorString(QString msg)
 {
     QMessageBox::critical(this, "Error", msg);
+}
+
+// this is a work in progress
+// 5x5 grid, the characters start off the map then get placed in different positions
+// white circles are temporary to understand how this looks on the UI
+// I had issues getting the map to load, without a server, is that normal?
+// Are we moving players on a button push?  What executes a turn?
+void mainWnd::paintEvent(QPaintEvent *e)
+{
+	QPainter painter(this);
+
+	// game pieces required are yellow, red, blue, green, black, white
+	painter.setBrush(Qt::blue);
+	painter.drawEllipse(QPointF(250, 222), 30, 30); //left circle
+	painter.setBrush(Qt::black);
+	painter.drawEllipse(QPointF(250, 438), 30, 30); //left circle
+	painter.setBrush(Qt::yellow);
+	painter.drawEllipse(QPointF(850, 222), 30, 30); //right circle
+	painter.setBrush(Qt::green);
+	painter.drawEllipse(QPointF(850, 438), 30, 30); //right circle
+	painter.setBrush(Qt::white);
+	painter.setPen(Qt::black);
+	painter.drawEllipse(QPointF(438, 35), 30, 30); //top circle
+	painter.setBrush(Qt::red);
+	painter.drawEllipse(QPointF(662, 35), 30, 30); //top circle
+
+	// space 112 and 225 apart x- and y-axis 
+	// circle (550-100=450; 450/2=225)
+
+	// game board, just to establish where the pieces should go
+	painter.setBrush(Qt::white);
+	painter.setPen(Qt::black);
+	painter.drawEllipse(QPointF(325, 100), 30, 30); //circle
+	painter.drawEllipse(QPointF(438, 100), 30, 30); //circle
+	painter.drawEllipse(QPointF(550, 100), 30, 30); //circle
+	painter.drawEllipse(QPointF(662, 100), 30, 30); //circle
+	painter.drawEllipse(QPointF(775, 100), 30, 30); //circle
+
+	painter.drawEllipse(QPointF(325, 222), 30, 30); //circle
+	painter.drawEllipse(QPointF(550, 222), 30, 30); //circle
+	painter.drawEllipse(QPointF(775, 222), 30, 30); //circle
+
+	painter.drawEllipse(QPointF(325, 325), 30, 30); //circle
+	painter.drawEllipse(QPointF(438, 325), 30, 30); //circle
+	painter.drawEllipse(QPointF(550, 325), 30, 30); //circle
+	painter.drawEllipse(QPointF(662, 325), 30, 30); //circle
+	painter.drawEllipse(QPointF(775, 325), 30, 30); //circle
+
+	painter.drawEllipse(QPointF(325, 438), 30, 30); //circle
+	painter.drawEllipse(QPointF(550, 438), 30, 30); //circle
+	painter.drawEllipse(QPointF(775, 438), 30, 30); //circle
+
+	painter.drawEllipse(QPointF(325, 550), 30, 30); //circle
+	painter.drawEllipse(QPointF(438, 550), 30, 30); //circle
+	painter.drawEllipse(QPointF(550, 550), 30, 30); //circle
+	painter.drawEllipse(QPointF(662, 550), 30, 30); //circle
+	painter.drawEllipse(QPointF(775, 550), 30, 30); //circle
 }
