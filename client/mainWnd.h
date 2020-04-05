@@ -24,5 +24,6 @@ private:
 
     QTextEdit* m_txtState;   
     QLabel*    m_map;
-
+    
+    void paintEvent(QPaintEvent *event); // place game pieces onto the board
 };
