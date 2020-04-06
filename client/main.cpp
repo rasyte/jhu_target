@@ -25,6 +25,9 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
+#else
+#include <unistd.h>
+
 #endif
 
 #include "mainWnd.h"

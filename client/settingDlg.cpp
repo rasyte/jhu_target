@@ -103,11 +103,11 @@ void settingDlg::accept()
 {
     if (m_edtServer->text() == "")
     {
-        QMessageBox::critical(nullptr, "Error - missing value", "you must provide a server IP");
+        QMessageBox::critical(nullptr, "[settingsDlg] : Error - missing value", "you must provide a server IP");
     }
     else if (m_edtPort->text() == "")
     {
-        QMessageBox::critical(nullptr, "Error - missing value", "you must provide a port number");
+        QMessageBox::critical(nullptr, "[settingsDlg] : Error - missing value", "you must provide a port number");
     }
     else
     {

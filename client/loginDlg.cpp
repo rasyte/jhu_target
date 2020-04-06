@@ -110,11 +110,11 @@ void loginDlg::accept()
 {
     if (m_edtUID->text().isEmpty())
     {
-        QMessageBox::critical(this, "error - missing user name", "please enter a user name");
+        QMessageBox::critical(this, "[loginDlg.cpp] error - missing user name", "please enter a user name");
     }
     else if (m_edtPwd->text().isEmpty())
     {
-        QMessageBox::critical(this, "error - missing password", "please enter a password");
+        QMessageBox::critical(this, "[loginDlg.cpp] error - missing password", "please enter a password");
     }
     else
     {
