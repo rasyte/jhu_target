@@ -1,5 +1,27 @@
 <RCC>
-    <qresource prefix="/mainWnd">
+    <qresource prefix="/">
         <file>Resources/gear.png</file>
+		<file>Resources/board.png</file>
+        <file>Resources/card1.png</file>
+        <file>Resources/card2.png</file>
+        <file>Resources/card3.png</file>
+        <file>Resources/card4.png</file>
+        <file>Resources/card5.png</file>
+        <file>Resources/card6.png</file>
+        <file>Resources/card7.png</file>
+        <file>Resources/card8.png</file>
+        <file>Resources/card9.png</file>
+        <file>Resources/card10.png</file>
+        <file>Resources/card11.png</file>
+        <file>Resources/card12.png</file>
+        <file>Resources/card13.png</file>
+        <file>Resources/card14.png</file>
+        <file>Resources/card15.png</file>
+        <file>Resources/card16.png</file>
+        <file>Resources/card17.png</file>
+        <file>Resources/card18.png</file>
+        <file>Resources/card19.png</file>
+        <file>Resources/card20.png</file>
+        <file>Resources/card21.png</file>
     </qresource>
 </RCC>

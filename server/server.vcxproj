@@ -151,10 +151,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="manager.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="makefile.txt" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="logger.h" />
+    <ClInclude Include="manager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

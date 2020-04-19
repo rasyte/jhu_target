@@ -8,16 +8,31 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
+
 #pragma comment(lib, "ws2_32.lib")
+//#pragma pack(show)
+//typedef struct _tag_hdr
+//{
+//    short      msgLen;
+//    char       chCode;
+//    char       szMsg[128];              // more than we really need
+//} msgT, *pMsgT;
 
-
-#else
+#else           
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+
+//typedef struct _tag_hdr
+//{
+//    short      msgLen;
+//    char       chCode;
+//    char       szMsg[128];              // more than we really need
+//} __attribute__((packed)) msgT, *pMsgT;
+
 #endif
 
 
@@ -25,11 +40,14 @@
 #include <stdlib.h>
 #include <iostream>
 #include <queue>
+#include <thread>
+#include <mutex>
+#include "../common/common.h"
+#include "manager.h" 
 
 const char defServer[] = {"192.168.1.19"};
 const unsigned short defPort = 1337;
 const char lpszVersion[] = {"0.0.5"};
-
 
 
 bool initWinSock();  // for windows only...need to initialize the socket subsytems
@@ -37,13 +55,11 @@ int getLastError(); // windows -- wrapper around WSAGetLastError; linux - just r
 void showUsage();
 void showVersion();
 
-typedef struct _connInfo
-{
-  int                   connfd;
-  struct   sockaddr_in  cliAddr;
-} connInfoT, *pconnInfoT;
 
 std::vector<pconnInfoT>  g_conns;              // global queue of connections
+bool                     g_bForce;             // condition variable to force a game to start
+bool                     g_bMgrRun;            // condition variable to control manager thread
+std::mutex               g_mutexque;           // mutex to guard access to player queue
 
 
 int main()
@@ -52,8 +68,18 @@ int main()
   unsigned int        len;
   struct sockaddr_in  servAddr, cliAddr;
   int                 nRet;
-
+  
+  g_bForce = false;
+  g_bMgrRun = true;
   // TODO: process command line arguments...only use defalut if necessary
+
+  std::cout << "Welcome to the Clue-less server." << std::endl;
+  showUsage();
+  
+  // launch our manager thread...
+  std::thread manager(manage);                       // manage is the name of the tread function
+
+  
 
   if (initWinSock())
   {
@@ -65,8 +91,15 @@ int main()
           servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
           servAddr.sin_port = htons(defPort);
 
-          std::cout << "Welcome to the Clue-less server." << std::endl;
-          showUsage();
+
+
+          // build our heatbeat message, will reuse this often...
+          msgT   hbMsg;
+          memset((void*)hbMsg.szMsg, '\0', 128);
+          int cntCh = sprintf(hbMsg.szMsg, "connect to server %s", "192.168.1.19");
+          hbMsg.msgLen = (short)(4 + cntCh);           // header length + null terminator...
+          hbMsg.chCode = CMD_HRT_BEAT;
+
 
           if (0 == (nRet = bind(sockfd, (struct sockaddr*)&servAddr, sizeof(servAddr))))
           {
@@ -77,7 +110,7 @@ int main()
                   len = sizeof(cliAddr);
                   fd_set   rdfs;              // input descriptors to listen on
                   struct timeval tv;
-
+		  
                   while (bRun)
                   {
                       tv.tv_sec = 5;            // set timeout for 5 sec
@@ -113,7 +146,7 @@ int main()
                                       int cnt = 1;
                                       while (g_conns.end() != iter)
                                       {
-                                          std::cout << "connection: (" << cnt++ << ") IP address " << inet_ntoa((*iter)->cliAddr.sin_addr) << std::endl;
+                                          std::cout << "connection: (" << cnt++ << ") IP address " << defServer << std::endl;
                                           ++iter;
                                       }
                                   }
@@ -128,7 +161,7 @@ int main()
 
                               case 'f':
                               {
-                                  std::cout << "NYI" << std::endl;
+                                  g_bForce = true;
                               }
                               break;
 
@@ -147,6 +180,10 @@ int main()
                               case 'q':
                               {
                                   bRun = false;
+                                  g_bMgrRun = false;
+				  std::cout << "waiting on manager thread to terminate..."<< std::endl;
+				  manager.join();
+				  
                               }
                               break;
 
@@ -156,7 +193,7 @@ int main()
                           } // end of stdin FD_ISSET
                           else if (FD_ISSET(sockfd, &rdfs))    // data on listening sockect
                           {
-                              if (0 < (connfd = accept(sockfd, (struct sockaddr*)&cliAddr, reinterpret_cast<int*>(&len))))
+                              if (0 < (connfd = accept(sockfd, (struct sockaddr*)&cliAddr, reinterpret_cast<socklen_t*>(&len))))
                               {
                                   pconnInfoT connInfo = new connInfoT;
                                   connInfo->connfd = connfd;
@@ -164,8 +201,12 @@ int main()
                                   connInfo->cliAddr.sin_addr.s_addr = cliAddr.sin_addr.s_addr;
                                   connInfo->cliAddr.sin_port = cliAddr.sin_port;
 
+				  g_mutexque.lock();
                                   g_conns.push_back(connInfo);
+				  g_mutexque.unlock();
 
+                                  // send a connected message here....
+                                  send(connfd, (char*)&hbMsg, hbMsg.msgLen, 0);
                               }
                               else
                               {
@@ -178,11 +219,23 @@ int main()
                               std::cerr << "unexpected file descriptor signaled?" << std::endl;
                           }
                       }
-                      else
+                      else                     // send a heartbeat on each timeout...
                       {
-                          std::cerr << "timeout has occured" << std::endl;
+                          std::vector<pconnInfoT>::iterator iter = g_conns.begin();
+                          if (g_conns.size() > 0)
+                          {
+                              while (g_conns.end() != iter)
+                              {
+                                  send((*iter)->connfd, (char*)&hbMsg, hbMsg.msgLen, 0);
+                                  ++iter;
+                              }
+                          }
                       }
                   }   // end of while block
+
+		  std::cout << "main thread exiting, joining manager thread..." << std::endl;
+
+		  std::cout << "closing any still open sockets..." << std::endl;
 
                   // close all sockets still in the queue.....
                   std::vector<pconnInfoT>::iterator   iter = g_conns.begin();
@@ -190,13 +243,19 @@ int main()
                   {   
                       while (g_conns.end() != iter)
                       {
-                          char msg[25];
-                          msg[0] = 0x00;
-                          msg[1] = 0x19;
-                          msg[2] = 0x06;
-                          strcpy(&msg[3], "Server is shutting down");
-                          send((*iter)->connfd, msg, 25, 0);
+                          const char* str = "Server is shutting down";
+                          msgT   msg;
+                          msg.msgLen = (short)(4 + strlen(str));           // header length + null terminator...
+                          msg.chCode = CMD_SHUTDOWN;
+                          memset((void*)msg.szMsg, '\0', 50);            
+                          strcpy(msg.szMsg, str);           
+
+                          send((*iter)->connfd, (char*)&msg, msg.msgLen, 0);
+#ifdef __WIN
                           closesocket((*iter)->connfd);
+#else
+			  close((*iter)->connfd);
+#endif
                           (*iter)->connfd = -1;
                           ++iter;
                       }
@@ -231,9 +290,9 @@ int main()
 void showUsage()
 {
   std::cout << "Commands accepted:" << std::endl;
-  std::cout << "l    list clients connected to the server (NYI)" << std::endl;
+  std::cout << "l    list clients connected to the server " << std::endl;
   std::cout << "g    list games currently running on server (NYI)" << std::endl;
-  std::cout << "f    force a game to start, even with less than 3 players (NYI)" << std::endl;
+  std::cout << "f    force a game to start, even with less than 3 players " << std::endl;
   std::cout << "v    shows version information" << std::endl;
   std::cout << "h    shows this screen " << std::endl;
   std::cout << "q    close all sockets and exit" << std::endl;

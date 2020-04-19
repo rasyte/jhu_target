@@ -3,11 +3,8 @@
 #include <QObject>
 #include <QString>
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <time.h>
 
-
+#include "../common/common.h"
 #include "logger.h"
 
 class gameWorker : public QObject
@@ -17,22 +14,29 @@ class gameWorker : public QObject
 public:
     gameWorker(char* serverIP, short sPort);
     ~gameWorker();
-
-    enum CMDS { CMD_HRT_BEAT = 0, CMD_UPDATE_STATE, CMD_SUGGEST, CMD_ACCUSE, CMD_INIT, CMD_PLAYER_JOIN, CMD_SHUTDOWN};
+    void quit();                   // used to terminate the worker thread.
 
 public slots:
     void process();
+    void sendMsg(QByteArray);
+    void onTurnOver();
 
 signals:
     void finished();
     void error(QString err);
     void hrtBeat(QString time);
+    void serverShutdown(QString msg);
+    void gameBegin(QString msg);
+    void selectAvatar(QString);
+    void onInit();
+    void onTurn();
 
 private:
     bool     m_bRun;
+    bool     m_bConnected;               // are we connected to a server
     char*    m_sIP;
     short    m_sPort;
-    SOCKET   m_soc;               // socket we talk to the server on.
+    int /*SOCKET*/   m_soc;               // socket we talk to the server on.
 
 
     bool   connectServer();
