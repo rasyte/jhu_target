@@ -185,17 +185,20 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 case CMD_MOVE:
                                 {
                                     // TODO : rebroadcast to all playing
+                                    std::cout << "in CMD_MOVE " << std::endl;
                                 }
                                 case CMD_SUGGEST:                               // got a suggestion from server
                                 {
                                     // TODO : prove or disprove suggestion
                                     // TODO : rebroadcast to all playing, along with results
+                                    std::cout << "in CMD_SUGGEST " << std::endl;
                                     break;
                                 }
                                 case CMD_ACCUSE:                                // got an accusation from server
                                 {
                                     // TODO : prove or disprove accusation
                                     // TODO : rebroadcast to all playing, along with results
+                                    std::cout << "in CMD_ACCUSE " << std::endl;
                                     break;
                                 }
                                 case CMD_TURN_OVER:
