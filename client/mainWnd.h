@@ -20,7 +20,7 @@ public:
     int  getCurrentLoc() { return m_nCurrentLoc; }
 
 signals:
-    void sendMsg(QByteArray);
+    void sendMsg(int, QByteArray);
     void onTurnOver();
 
 private slots:
@@ -36,6 +36,7 @@ private slots:
     void onConnect();
     void onDisconnect();
     void onThreadOver();
+    void doSuggestion(int);
     void onExit();
     void currentLoc(int);
 

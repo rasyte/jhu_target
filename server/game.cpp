@@ -29,6 +29,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
     std::vector<pconnInfoT>::iterator    iter = vecPlayers.begin();
     while(vecPlayers.end() != iter)
     {
+        unsigned char  newAvatar[6];             // list returned from player
         int fdClient = (*iter)->connfd; 
         msgT  msg;
             
@@ -51,11 +52,25 @@ void game(std::vector<pconnInfoT> vecPlayers)
         send(fdClient, (const char*)&msg, msg.msgLen, 0);           // send init message
 
         recv(fdClient, (char*)&msg, msg.msgLen, 0);                 // get response from the client
-        // TODO : update the avatar field in g_conns
-        memcpy(avatar, msg.szMsg, NBR_SUSPECTS);                    // update the avatar array
+        memcpy(newAvatar, msg.szMsg, NBR_SUSPECTS);                 // get list returned from client
+
+        // compare new list to old list, difference is the avatar this player took...
+        for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
+        {
+            if (avatar[ndx] != newAvatar[ndx])
+            {
+                (*iter)->avatar = ndx;
+                break;
+            }
+        }
+
+        std::cout << "[game] player " << (*iter)->player << " choose avatar " << (*iter)->avatar << std::endl;
+
+        memcpy(avatar, newAvatar, NBR_SUSPECTS);                    // replace original list with new list
         std::cout << "[game] new list of avatars are: ";
         std::copy(avatar, avatar + NBR_SUSPECTS, out_it);
         std::cout << std::endl;
+
         ++iter;
     }
 
@@ -123,6 +138,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
         ++iter;
     }
 
+    // TODO : fix this....sort conn list on avatar, and then start with lowest avatar
     int player = 0;                  // should be the person that choose Miss Scarlet
 
     while(!bWinner)
@@ -185,25 +201,24 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 case CMD_MOVE:
                                 {
                                     // TODO : rebroadcast to all playing
-                                    std::cout << "in CMD_MOVE " << std::endl;
                                 }
                                 case CMD_SUGGEST:                               // got a suggestion from server
                                 {
+                                    std::cout << "[game] read from client is: " << buf << std::endl;
                                     // TODO : prove or disprove suggestion
                                     // TODO : rebroadcast to all playing, along with results
-                                    std::cout << "in CMD_SUGGEST " << std::endl;
                                     break;
                                 }
                                 case CMD_ACCUSE:                                // got an accusation from server
                                 {
+                                    std::cout << "[game] read from client is: " << buf << std::endl;
                                     // TODO : prove or disprove accusation
                                     // TODO : rebroadcast to all playing, along with results
-                                    std::cout << "in CMD_ACCUSE " << std::endl;
                                     break;
                                 }
                                 case CMD_TURN_OVER:
                                 {
-				    std::cout << "Players turn is over" << std::endl;
+                                    std::cout << "Players" << (*iter)->player << " turn is over " << std::endl;
                                     bTurn = false;                             // signal turn is over
                                 }
                                 default:
@@ -225,7 +240,10 @@ void game(std::vector<pconnInfoT> vecPlayers)
                 std::cout << "timeout occured" << std::endl;
             }
         }
+        std::cout << "[game] Incrementing to next player" << std::endl;
+
         player = (player + 1) % cntPlayers;               // increment to next player..
+        std::cout << "player " << player << "'s turn" << std::endl;
     }
  
     // TODO : send game closing message

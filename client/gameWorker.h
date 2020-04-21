@@ -18,7 +18,7 @@ public:
 
 public slots:
     void process();
-    void sendMsg(QByteArray);
+    void sendMsg(int, QByteArray);
     void onTurnOver();
 
 signals:

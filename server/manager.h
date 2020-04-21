@@ -23,7 +23,7 @@ typedef struct _connInfo
 {
     int                   connfd;
     int                   player;
-    int                   avatar;
+    int                   avatar;     // what avatar this player is playing...used to determine turn order
     std::vector<char>     cards;
     struct   sockaddr_in  cliAddr;
 } connInfoT, *pconnInfoT;

@@ -5,7 +5,7 @@
 
 typedef struct _tag_loc
 {
-    int      id;                  // id of the location
+    int      id;                  // id of the location 0 - 8 are rooms to correlate to cards.
     int      type;                // 0 is room, 1 is hall, 2 is starting location
     const char*    name;
     QRect    bb;                  // bounding box of the location
@@ -25,6 +25,7 @@ public:
 
 signals:
     void currentLoc(int);
+    void sendSuggestion(int);
 
 
 protected:

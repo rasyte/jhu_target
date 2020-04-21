@@ -14,6 +14,8 @@ public:
 
     QString   getGuess() { return m_qstrGuess; }
 
+    void setRoom(int r);
+
 private slots:
     void accept();
     void reject();

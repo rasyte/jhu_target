@@ -1,144 +1,789 @@
-[07-Mar-2020:1250] Client starting up
-[07-Mar-2020:1250] gameWorker constructor
-[07-Mar-2020:1250] worker alive and running
-[07-Mar-2020:1251] gameWorker destructor
-[07-Mar-2020:1416] Client starting up
-[07-Mar-2020:1416] gameWorker constructor
-[07-Mar-2020:1416] worker alive and running
-[07-Mar-2020:1416] gameWorker destructor
-[07-Mar-2020:1419] Client starting up
-[07-Mar-2020:1420] gameWorker constructor
-[07-Mar-2020:1420] worker alive and running
-[07-Mar-2020:1420] gameWorker destructor
-[07-Mar-2020:1423] Client starting up
-[07-Mar-2020:1423] gameWorker constructor
-[07-Mar-2020:1423] worker alive and running
-[07-Mar-2020:1423] gameWorker destructor
-[07-Mar-2020:1427] Client starting up
-[07-Mar-2020:1427] gameWorker constructor
-[07-Mar-2020:1427] worker alive and running
-[07-Mar-2020:1427] gameWorker destructor
-[07-Mar-2020:1427] Client starting up
-[07-Mar-2020:1428] gameWorker constructor
-[07-Mar-2020:1428] worker alive and running
-[07-Mar-2020:1428] gameWorker destructor
-[07-Mar-2020:1434] Client starting up
-[07-Mar-2020:1434] gameWorker constructor
-[07-Mar-2020:1434] worker alive and running
-[07-Mar-2020:1434] gameWorker destructor
-[07-Mar-2020:1443] Client starting up
-[07-Mar-2020:1443] gameWorker constructor
-[07-Mar-2020:1443] worker alive and running
-[07-Mar-2020:1443] gameWorker destructor
-[07-Mar-2020:1450] Client starting up
-[07-Mar-2020:1450] gameWorker constructor
-[07-Mar-2020:1450] worker alive and running
-[07-Mar-2020:1450] gameWorker destructor
-[07-Mar-2020:1453] Client starting up
-[07-Mar-2020:1453] gameWorker constructor
-[07-Mar-2020:1453] worker alive and running
-[07-Mar-2020:1453] gameWorker destructor
-[07-Mar-2020:1506] Client starting up
-[07-Mar-2020:1506] gameWorker constructor
-[07-Mar-2020:1506] worker alive and running
-[07-Mar-2020:1506] gameWorker destructor
-[07-Mar-2020:1510] Client starting up
-[07-Mar-2020:1510] gameWorker constructor
-[07-Mar-2020:1510] worker alive and running
-[07-Mar-2020:1510] gameWorker destructor
-[07-Mar-2020:1521] Client starting up
-[07-Mar-2020:1521] gameWorker constructor
-[07-Mar-2020:1521] worker alive and running
-[07-Mar-2020:1521] gameWorker destructor
-[07-Mar-2020:1526] Client starting up
-[07-Mar-2020:1526] gameWorker constructor
-[07-Mar-2020:1526] worker alive and running
-[07-Mar-2020:1526] gameWorker destructor
-[07-Mar-2020:1530] Client starting up
-[07-Mar-2020:1530] gameWorker constructor
-[07-Mar-2020:1530] worker alive and running
-[07-Mar-2020:1530] gameWorker destructor
-[07-Mar-2020:1538] Client starting up
-[07-Mar-2020:1538] gameWorker constructor
-[07-Mar-2020:1538] worker alive and running
-[07-Mar-2020:1538] gameWorker destructor
-[07-Mar-2020:1543] Client starting up
-[07-Mar-2020:1543] gameWorker constructor
-[07-Mar-2020:1543] worker alive and running
-[07-Mar-2020:1543] gameWorker destructor
-[07-Mar-2020:1548] Client starting up
-[07-Mar-2020:1548] gameWorker constructor
-[07-Mar-2020:1548] worker alive and running
-[07-Mar-2020:1548] gameWorker destructor
-[07-Mar-2020:1551] Client starting up
-[07-Mar-2020:1551] gameWorker constructor
-[07-Mar-2020:1551] worker alive and running
-[07-Mar-2020:1551] gameWorker destructor
-[07-Mar-2020:1552] Client starting up
-[07-Mar-2020:1552] gameWorker constructor
-[07-Mar-2020:1552] worker alive and running
-[07-Mar-2020:1552] gameWorker destructor
-[07-Mar-2020:1553] Client starting up
-[07-Mar-2020:1553] gameWorker constructor
-[07-Mar-2020:1553] worker alive and running
-[07-Mar-2020:1553] gameWorker destructor
-[07-Mar-2020:1554] Client starting up
-[07-Mar-2020:1554] gameWorker constructor
-[07-Mar-2020:1554] worker alive and running
-[07-Mar-2020:1554] gameWorker destructor
-[07-Mar-2020:1604] Client starting up
-[07-Mar-2020:1605] gameWorker constructor
-[07-Mar-2020:1605] worker alive and running
-[07-Mar-2020:1605] gameWorker destructor
-[07-Mar-2020:1606] Client starting up
-[07-Mar-2020:1606] gameWorker constructor
-[07-Mar-2020:1606] worker alive and running
-[07-Mar-2020:1606] gameWorker destructor
-[07-Mar-2020:1608] Client starting up
-[07-Mar-2020:1608] gameWorker constructor
-[07-Mar-2020:1608] worker alive and running
-[07-Mar-2020:1608] gameWorker destructor
-[07-Mar-2020:1609] Client starting up
-[07-Mar-2020:1609] gameWorker constructor
-[07-Mar-2020:1609] worker alive and running
-[07-Mar-2020:1609] gameWorker destructor
-[07-Mar-2020:1612] Client starting up
-[07-Mar-2020:1612] gameWorker constructor
-[07-Mar-2020:1612] worker alive and running
-[07-Mar-2020:1612] gameWorker destructor
-[07-Mar-2020:1613] Client starting up
-[07-Mar-2020:1613] gameWorker constructor
-[07-Mar-2020:1613] worker alive and running
-[07-Mar-2020:1613] gameWorker destructor
-[07-Mar-2020:1617] Client starting up
-[07-Mar-2020:1617] gameWorker constructor
-[07-Mar-2020:1617] worker alive and running
-[07-Mar-2020:1617] gameWorker destructor
-[07-Mar-2020:1619] Client starting up
-[07-Mar-2020:1619] gameWorker constructor
-[07-Mar-2020:1619] worker alive and running
-[07-Mar-2020:1619] gameWorker destructor
-[07-Mar-2020:1620] Client starting up
-[07-Mar-2020:1620] gameWorker constructor
-[07-Mar-2020:1620] worker alive and running
-[07-Mar-2020:1620] gameWorker destructor
-[07-Mar-2020:1631] Client starting up
-[07-Mar-2020:1631] gameWorker constructor
-[07-Mar-2020:1631] worker alive and running
-[07-Mar-2020:1631] gameWorker destructor
-[07-Mar-2020:1635] Client starting up
-[07-Mar-2020:1635] gameWorker constructor
-[07-Mar-2020:1635] worker alive and running
-[07-Mar-2020:1635] gameWorker destructor
-[07-Mar-2020:1636] Client starting up
-[07-Mar-2020:1636] gameWorker constructor
-[07-Mar-2020:1636] worker alive and running
-[07-Mar-2020:1636] gameWorker destructor
-[07-Mar-2020:1642] Client starting up
-[07-Mar-2020:1642] gameWorker constructor
-[07-Mar-2020:1642] worker alive and running
-[07-Mar-2020:1642] gameWorker destructor
-[07-Mar-2020:1652] Client starting up
-[07-Mar-2020:1652] gameWorker constructor
-[07-Mar-2020:1652] worker alive and running
-[07-Mar-2020:1652] gameWorker destructor
+[21-Apr-2020:1106] Client starting up
+[21-Apr-2020:1106] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1106] [gameWorker] -- worker alive and running
+[21-Apr-2020:1106] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1106] [gameWorker] -- Failed to connect to server, error: 10061
+
+[21-Apr-2020:1106] [gameWorker] -- server connect failed, error is 10061
+
+[21-Apr-2020:1106] [gameWorker] -- gameWorker destructor
+[21-Apr-2020:1106] worker thead has terminated
+[21-Apr-2020:1121] Client starting up
+[21-Apr-2020:1121] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1121] [gameWorker] -- worker alive and running
+[21-Apr-2020:1121] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1121] [gameWorker] -- Failed to connect to server, error: 10061
+
+[21-Apr-2020:1121] [gameWorker] -- server connect failed, error is 10061
+
+[21-Apr-2020:1121] [gameWorker] -- gameWorker destructor
+[21-Apr-2020:1121] worker thead has terminated
+[21-Apr-2020:1121] sending a suggestion message....
+
+[21-Apr-2020:1121] sending a suggestion message....
+
+[21-Apr-2020:1123] Client starting up
+[21-Apr-2020:1123] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1123] [gameWorker] -- worker alive and running
+[21-Apr-2020:1123] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1123] [gameWorker] -- Failed to connect to server, error: 10061
+
+[21-Apr-2020:1123] [gameWorker] -- server connect failed, error is 10061
+
+[21-Apr-2020:1123] [gameWorker] -- gameWorker destructor
+[21-Apr-2020:1123] worker thead has terminated
+[21-Apr-2020:1123] sending a suggestion message....
+
+[21-Apr-2020:1123] sending a suggestion message....
+
+[21-Apr-2020:1123] sending a suggestion message....
+
+[21-Apr-2020:1123] sending a suggestion message....
+
+[21-Apr-2020:1123] sending a suggestion message....
+
+[21-Apr-2020:1124] sending a suggestion message....
+
+[21-Apr-2020:1125] sending a suggestion message....
+
+[21-Apr-2020:1125] sending a suggestion message....
+
+[21-Apr-2020:1126] sending a suggestion message....
+
+[21-Apr-2020:1127] Client starting up
+[21-Apr-2020:1127] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1127] [gameWorker] -- worker alive and running
+[21-Apr-2020:1127] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1127] [gameWorker] -- Failed to connect to server, error: 10061
+
+[21-Apr-2020:1127] [gameWorker] -- server connect failed, error is 10061
+
+[21-Apr-2020:1127] [gameWorker] -- gameWorker destructor
+[21-Apr-2020:1127] worker thead has terminated
+[21-Apr-2020:1127] sending a suggestion message....
+
+[21-Apr-2020:1127] sending a suggestion message....
+
+[21-Apr-2020:1127] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1128] sending a suggestion message....
+
+[21-Apr-2020:1250] Client starting up
+[21-Apr-2020:1250] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1250] [gameWorker] -- worker alive and running
+[21-Apr-2020:1250] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [mainWnd]: received from comms thread
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [gameWorker] -- top of while loop
+[21-Apr-2020:1250] [mainWnd]: sending to server:
+[21-Apr-2020:1250] u
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] a
+[21-Apr-2020:1250] sending message to comms thread
+[21-Apr-2020:1251] got a request to send a message
+
+[21-Apr-2020:1251] done sending message
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [in onInit] in vector we have:
+[21-Apr-2020:1251] 3 -> 4  
+
+[21-Apr-2020:1251] 21 -> 13  
+
+[21-Apr-2020:1251] 0 -> 1  
+
+[21-Apr-2020:1251] 1 -> 2  
+
+[21-Apr-2020:1251] 13 -> 10  
+
+[21-Apr-2020:1251] 28 -> 20  
+
+[21-Apr-2020:1251] 12 -> 9  
+
+[21-Apr-2020:1251] 26 -> 18  
+
+[21-Apr-2020:1251] 22 -> 14  
+
+[21-Apr-2020:1251] 24 -> 16  
+
+[21-Apr-2020:1251] 11 -> 8  
+
+[21-Apr-2020:1251] 25 -> 17  
+
+[21-Apr-2020:1251] 5 -> 6  
+
+[21-Apr-2020:1251] 10 -> 7  
+
+[21-Apr-2020:1251] 27 -> 19  
+
+[21-Apr-2020:1251] 2 -> 3  
+
+[21-Apr-2020:1251] 14 -> 11  
+
+[21-Apr-2020:1251] 20 -> 12  
+
+[21-Apr-2020:1251] -3 -> -2  
+
+[21-Apr-2020:1251] -3 -> -2  
+
+[21-Apr-2020:1251] -3 -> -2  
+
+[21-Apr-2020:1251] [gameWorker] In CMD_TURN handler
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1251] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] In CMD_TURN handler
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1252] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1252] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] Client starting up
+[21-Apr-2020:1255] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1255] [gameWorker] -- worker alive and running
+[21-Apr-2020:1255] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1255] [mainWnd]: received from comms thread
+[21-Apr-2020:1255] [gameWorker] -- top of while loop
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] a
+[21-Apr-2020:1256] [gameWorker] -- top of while loop
+[21-Apr-2020:1256] [gameWorker] -- top of while loop
+[21-Apr-2020:1257] [mainWnd]: sending to server:
+[21-Apr-2020:1257] [gameWorker] -- top of while loop
+[21-Apr-2020:1257] a
+[21-Apr-2020:1257] a
+[21-Apr-2020:1257] a
+[21-Apr-2020:1257] u
+[21-Apr-2020:1257] [gameWorker] -- top of while loop
+[21-Apr-2020:1257] a
+[21-Apr-2020:1257] a
+[21-Apr-2020:1257] sending message to comms thread
+[21-Apr-2020:1257] got a request to send a message
+
+[21-Apr-2020:1259] done sending message
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] In CMD_TURN handler
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [in onInit] in vector we have:
+[21-Apr-2020:1259] 12 -> 9  
+
+[21-Apr-2020:1259] 14 -> 11  
+
+[21-Apr-2020:1259] 10 -> 7  
+
+[21-Apr-2020:1259] 24 -> 16  
+
+[21-Apr-2020:1259] 4 -> 5  
+
+[21-Apr-2020:1259] 26 -> 18  
+
+[21-Apr-2020:1259] 20 -> 12  
+
+[21-Apr-2020:1259] 3 -> 4  
+
+[21-Apr-2020:1259] 15 -> 12  
+
+[21-Apr-2020:1259] 22 -> 14  
+
+[21-Apr-2020:1259] 2 -> 3  
+
+[21-Apr-2020:1259] 13 -> 10  
+
+[21-Apr-2020:1259] 23 -> 15  
+
+[21-Apr-2020:1259] 21 -> 13  
+
+[21-Apr-2020:1259] 5 -> 6  
+
+[21-Apr-2020:1259] 28 -> 20  
+
+[21-Apr-2020:1259] 1 -> 2  
+
+[21-Apr-2020:1259] 25 -> 17  
+
+[21-Apr-2020:1259] -3 -> -2  
+
+[21-Apr-2020:1259] -3 -> -2  
+
+[21-Apr-2020:1259] -3 -> -2  
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] In CMD_TURN handler
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1259] [gameWorker] -- top of while loop
+[21-Apr-2020:1259] [gameWorker] -- select failed error is 10093
+
+[21-Apr-2020:1342] Client starting up
+[21-Apr-2020:1342] gameWorker] -- gameWorker constructor
+[21-Apr-2020:1342] [gameWorker] -- worker alive and running
+[21-Apr-2020:1342] [gameWorker] -- attempting to connect to server
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [mainWnd]: received from comms thread
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [mainWnd]: sending to server:
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] u
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] a
+[21-Apr-2020:1342] sending message to comms thread
+[21-Apr-2020:1342] got a request to send a message
+
+[21-Apr-2020:1342] done sending message
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [in onInit] in vector we have:
+[21-Apr-2020:1342] 15 -> 12  
+
+[21-Apr-2020:1342] 3 -> 4  
+
+[21-Apr-2020:1342] 4 -> 5  
+
+[21-Apr-2020:1342] 25 -> 17  
+
+[21-Apr-2020:1342] 21 -> 13  
+
+[21-Apr-2020:1342] 5 -> 6  
+
+[21-Apr-2020:1342] 2 -> 3  
+
+[21-Apr-2020:1342] 13 -> 10  
+
+[21-Apr-2020:1342] 12 -> 9  
+
+[21-Apr-2020:1342] 27 -> 19  
+
+[21-Apr-2020:1342] 23 -> 15  
+
+[21-Apr-2020:1342] 24 -> 16  
+
+[21-Apr-2020:1342] 10 -> 7  
+
+[21-Apr-2020:1342] 22 -> 14  
+
+[21-Apr-2020:1342] 11 -> 8  
+
+[21-Apr-2020:1342] 26 -> 18  
+
+[21-Apr-2020:1342] 0 -> 1  
+
+[21-Apr-2020:1342] 20 -> 12  
+
+[21-Apr-2020:1342] -3 -> -2  
+
+[21-Apr-2020:1342] -3 -> -2  
+
+[21-Apr-2020:1342] -3 -> -2  
+
+[21-Apr-2020:1342] [gameWorker] In CMD_TURN handler
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1342] sending a suggestion message....
+
+[21-Apr-2020:1342] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] got a request to send a message
+
+[21-Apr-2020:1343] done sending message
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- top of while loop
+[21-Apr-2020:1343] [gameWorker] -- resetting m_bRun to false
+[21-Apr-2020:1343] [gameWorker] -- gameWorker destructor
