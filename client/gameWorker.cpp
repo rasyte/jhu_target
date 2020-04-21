@@ -252,14 +252,14 @@ bool gameWorker::connectServer()
 }
 
 
-void gameWorker::sendMsg(QByteArray qbaMsg)
+void gameWorker::sendMsg(int cmd, QByteArray qbaMsg)
 {
     CLogger::getInstance()->LogMessage("got a request to send a message\n");
 
     QString    qstrMsg(qbaMsg.constData());
     msgT   msg;
     msg.msgLen = 3 + qstrMsg.length();
-    msg.chCode = CMD_UNUSED;
+    msg.chCode = cmd;                
     strcpy(msg.szMsg, qstrMsg.toStdString().c_str());
     int nRet = send(m_soc, (const char*)&msg, msg.msgLen, 0);
 

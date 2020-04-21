@@ -117,6 +117,9 @@ void guessDlg::setupUI()
     m_cboRoom->setCurrentIndex(0);
     m_cboRoom->setFont(font);
 
+    if (m_bMode)                  /// doing a suggestion, room must be current room
+        m_cboRoom->setDisabled(true);
+
     //retranslateUi(GuessDlg);
     QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
     QObject::connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -144,7 +147,7 @@ void guessDlg::accept()
                 }
 
                 
-                m_qstrGuess = QString("%1%2%3").arg(suspect).arg(weapon).arg(room);
+                m_qstrGuess = QString("%1%2%3").arg(suspect-1).arg(weapon-1).arg(room-1);   // cbo index is one more than arrays
                 QDialog::accept();              
             }
             else
@@ -162,13 +165,12 @@ void guessDlg::accept()
         QMessageBox::warning(this, "Error", "[GuessDlg.cpp] You must select a suspect");
         
     }
-    
+}
 
 
-
-
-
-
+void guessDlg::setRoom(int r)
+{ 
+    m_cboRoom->setCurrentIndex(r+1); 
 }
     
 

@@ -265,6 +265,7 @@ void mainWnd::createMenus()
 void mainWnd::createConnections()
 {
     connect(m_pBoard, SIGNAL(currentLoc(int)), SLOT(currentLoc(int)));
+    connect(m_pBoard, SIGNAL(sendSuggestion(int)), SLOT(doSuggestion(int)));
 }
 
 void mainWnd::createWorker(char* sIP, short sPort) 
@@ -282,7 +283,7 @@ void mainWnd::createWorker(char* sIP, short sPort)
     connect(m_pWorker, SIGNAL(onTurn()), this, SLOT(onTurn()));
     connect(m_pWorker, SIGNAL(selectAvatar(QString)), this, SLOT(selectAvatar(QString)));
 
-    connect(this, SIGNAL(sendMsg(QByteArray)), m_pWorker, SLOT(sendMsg(QByteArray)));
+    connect(this, SIGNAL(sendMsg(int, QByteArray)), m_pWorker, SLOT(sendMsg(int, QByteArray)));
     connect(this, SIGNAL(onTurnOver()), m_pWorker, SLOT(onTurnOver()));
 
     connect(m_pWorker, SIGNAL(finished()), m_pWorker, SLOT(deleteLater()));
@@ -319,16 +320,17 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
         if (QDialog::Accepted == dlg.exec() )
         {
             QString qstrGuess = dlg.getGuess(); 
-            msgT  msg;
-            msg.msgLen = HDR_LEN + qstrGuess.length();
-            msg.chCode = CMD_ACCUSE;
-            strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
+            //msgT  msg;
+            //msg.msgLen = HDR_LEN + qstrGuess.length();
+            //msg.chCode = CMD_ACCUSE;
+            //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
             // need to comvert msg to a qbytearray so we can use signals/slots.
-            char* buf = new char[msg.msgLen];
-            memcpy((void*)buf, (void*)&msg, msg.msgLen);
-            QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
+            //char* buf = new char[msg.msgLen];
+            //memcpy((void*)buf, (void*)&msg, msg.msgLen);
+            //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
+            QByteArray qbaMsg = qstrGuess.toUtf8();
 
-            emit sendMsg(qbaMsg);                                // TODO : send the message to server.....
+            emit sendMsg(CMD_ACCUSE, qbaMsg);                                // TODO : send the message to server.....
         }
 
     }
@@ -339,16 +341,17 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
         if (QDialog::Accepted == dlg.exec())
         {
             QString qstrGuess = dlg.getGuess();
-            msgT  msg;
-            msg.msgLen = HDR_LEN + qstrGuess.length();
-            msg.chCode = CMD_SUGGEST;
-            strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
+            //msgT  msg;
+            //msg.msgLen = HDR_LEN + qstrGuess.length();
+            //msg.chCode = CMD_SUGGEST;
+            //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
             // need to comvert msg to a qbytearray so we can use signals/slots.
-            char* buf = new char[msg.msgLen];
-            memcpy((void*)buf, (void*)&msg, msg.msgLen);
-            QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
+            //char* buf = new char[msg.msgLen];
+            //memcpy((void*)buf, (void*)&msg, msg.msgLen);
+            //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
+            QByteArray qbaMsg = qstrGuess.toUtf8();
 
-            emit sendMsg(qbaMsg);                                // TODO : send the message to server.....
+            emit sendMsg(CMD_SUGGEST, qbaMsg);                     // TODO : send the message to server.....
         }
     }
     else if (pevt->key() == Qt::Key_O)
@@ -407,7 +410,7 @@ void mainWnd::selectAvatar(QString  avatars)
             CLogger::getInstance()->LogMessage("%c", newList.at(ndx));
         }
         CLogger::getInstance()->LogMessage("sending message to comms thread");
-        emit sendMsg(QByteArray(newList.toStdString().c_str(), newList.size()));
+        emit sendMsg(CMD_UNUSED, QByteArray(newList.toStdString().c_str(), newList.size()));
 
     }
 }
@@ -497,4 +500,28 @@ void mainWnd::currentLoc(int loc)
     // TODO : make sure we have a CMD_MOVE implemented in server 
     // TODO : make sure we have a handle in the gameWorker to respond to the response from a move message from server
     // TODO : probably will need to implement something to move tokens programmatically.
+}
+
+
+void mainWnd::doSuggestion(int room)
+{
+    CLogger::getInstance()->LogMessage("sending a suggestion message....\n");
+    std::cout << "entering room number: " << room << std::endl;
+    guessDlg   dlg(this, true);
+    dlg.setRoom(room);
+    if (QDialog::Accepted == dlg.exec())
+    {
+        QString qstrGuess = dlg.getGuess();
+        //msgT  msg;
+        //msg.msgLen = HDR_LEN + qstrGuess.length();
+        //msg.chCode = CMD_SUGGEST;
+        //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
+        // need to comvert msg to a qbytearray so we can use signals/slots.
+        //char* buf = new char[msg.msgLen];
+        //memcpy((void*)buf, (void*)&msg, msg.msgLen);
+        //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
+        QByteArray qbaMsg = qstrGuess.toUtf8();
+
+        emit sendMsg(CMD_SUGGEST, qbaMsg);                                // TODO : send the message to server.....
+    }
 }

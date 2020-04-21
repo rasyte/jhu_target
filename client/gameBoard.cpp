@@ -85,7 +85,7 @@ void gameBoard::mousePressEvent(QMouseEvent* pEvent)
                 if (house[ndx].bb.contains(pEvent->pos(), true))
                 {
                     m_pToken->setData(0, mapToScene(pEvent->pos()));
-                    m_startLoc = house[ndx].id;
+                    m_startLoc = ndx; /* house[ndx].id; */
                     break;
                 }
             }
@@ -105,7 +105,7 @@ void gameBoard::mousePressEvent(QMouseEvent* pEvent)
                 if (house[ndx].bb.contains(pEvent->pos(), true))
                 {
                     bInHouse = true;
-                    m_endingLoc = house[ndx].id;
+                    m_endingLoc = ndx; /* house[ndx].id; */
                     if (validMove())                                      // is move a legal move
                     {
                         QPointF  p = m_pToken->data(0).toPointF();
@@ -121,6 +121,8 @@ void gameBoard::mousePressEvent(QMouseEvent* pEvent)
 
                         emit currentLoc(m_endingLoc);
 
+                        if (house[m_endingLoc].type == 0)     // ended in a room
+                            emit sendSuggestion(house[m_endingLoc].id);
                         m_pToken = nullptr;
                         
                     }
@@ -196,26 +198,26 @@ void gameBoard::initHouse()
 
     // format is: id, type, name, bbox, max toons, cur toons, neighbors
     house[ 0] = { 0, 0, lpszName[0],QRect{10 , 10, roomWidth, roomHeight}, 6, 0, {1,5,20,-1}  };     // correct
-    house[ 1] = { 1, 1, nullptr,    QRect{160, 50, hallWidth, hallHeight}, 1, 0, {0,2,-1,-1}  };
-    house[ 2] = { 2, 0, lpszName[1],QRect{260, 10, roomWidth, roomHeight}, 6, 0, {1,3, 6,-1}  };     // correct
-    house[ 3] = { 3, 1, nullptr,    QRect{410, 50, hallWidth, hallHeight}, 1, 0, {2,4,-1,-1}  };
-    house[ 4] = { 4, 0, lpszName[2],QRect{510, 10, roomWidth, roomHeight}, 6, 0, {3,7,16,-1}  };     // correct
-    house[ 5] = { 5, 1, nullptr,    QRect{60 ,140, hallHeight, hallWidth}, 1, 0, {0,8,-1,-1}  };     // dimensions reversed due to verticle orientation
-    house[ 6] = { 6, 1, nullptr,    QRect{310,140, hallHeight, hallWidth}, 1, 0, {2,10,-1,-1} };
-    house[ 7] = { 7, 1, nullptr,    QRect{560,140, hallHeight, hallWidth}, 1, 0, {4,12,-1,-1} };
-    house[ 8] = { 8, 0, lpszName[3],QRect{10 ,240, roomWidth, roomHeight}, 6, 0, {5,9,13,-1}  };     // correct
-    house[ 9] = { 9, 1, nullptr,    QRect{160,280, hallWidth, hallHeight}, 1, 0, {8,10,-1,-1} };
-    house[10] = {10, 0, lpszName[4],QRect{260,240, roomWidth, roomHeight}, 6, 0, {6,9,11,14}  };     // correct
-    house[11] = {11, 1, nullptr,    QRect{410,280, hallWidth, hallHeight}, 1, 0, {10,12,-1,-1}};
-    house[12] = {12, 0, lpszName[5],QRect{510,240, roomWidth, roomHeight}, 6, 0, {7,11,15,-1} };     // correct
-    house[13] = {13, 1, nullptr,    QRect{60 ,370, hallHeight, hallWidth}, 1, 0, {8,16,-1,-1} };
-    house[14] = {14, 1, nullptr,    QRect{310,370, hallHeight, hallWidth}, 1, 0, {10,18,-1,-1}};
-    house[15] = {15, 1, nullptr,    QRect{560,370, hallHeight, hallWidth}, 1, 0, {12,20,-1,-1}};
-    house[16] = {16, 0, lpszName[6],QRect{10 ,470, roomWidth, roomHeight}, 1, 0, {13,17,4,-1} };     // correct
-    house[17] = {17, 1, nullptr,    QRect{160,510, hallWidth, hallHeight}, 1, 0, {16,18,-1,-1}};
-    house[18] = {18, 0, lpszName[7],QRect{260,470, roomWidth, roomHeight}, 1, 0, {14,17,19,-1}};     // correct
-    house[19] = {19, 1, nullptr,    QRect{410,510, hallWidth, hallHeight}, 1, 0, {18,20,-1,-1}};
-    house[20] = {20, 0, lpszName[8],QRect{510,470, roomWidth, roomHeight}, 1, 0, {15,19,0,-1} };     // correct
+    house[ 1] = { 9, 1, nullptr,    QRect{160, 50, hallWidth, hallHeight}, 1, 0, {0,2,-1,-1}  };
+    house[ 2] = { 1, 0, lpszName[1],QRect{260, 10, roomWidth, roomHeight}, 6, 0, {1,3, 6,-1}  };     // correct
+    house[ 3] = {10, 1, nullptr,    QRect{410, 50, hallWidth, hallHeight}, 1, 0, {2,4,-1,-1}  };
+    house[ 4] = { 2, 0, lpszName[2],QRect{510, 10, roomWidth, roomHeight}, 6, 0, {3,7,16,-1}  };     // correct
+    house[ 5] = {11, 1, nullptr,    QRect{60 ,140, hallHeight, hallWidth}, 1, 0, {0,8,-1,-1}  };     // dimensions reversed due to verticle orientation
+    house[ 6] = {12, 1, nullptr,    QRect{310,140, hallHeight, hallWidth}, 1, 0, {2,10,-1,-1} };
+    house[ 7] = {13, 1, nullptr,    QRect{560,140, hallHeight, hallWidth}, 1, 0, {4,12,-1,-1} };
+    house[ 8] = { 3, 0, lpszName[3],QRect{10 ,240, roomWidth, roomHeight}, 6, 0, {5,9,13,-1}  };     // correct
+    house[ 9] = {14, 1, nullptr,    QRect{160,280, hallWidth, hallHeight}, 1, 0, {8,10,-1,-1} };
+    house[10] = { 4, 0, lpszName[4],QRect{260,240, roomWidth, roomHeight}, 6, 0, {6,9,11,14}  };     // correct
+    house[11] = {15, 1, nullptr,    QRect{410,280, hallWidth, hallHeight}, 1, 0, {10,12,-1,-1}};
+    house[12] = { 5, 0, lpszName[5],QRect{510,240, roomWidth, roomHeight}, 6, 0, {7,11,15,-1} };     // correct
+    house[13] = {16, 1, nullptr,    QRect{60 ,370, hallHeight, hallWidth}, 1, 0, {8,16,-1,-1} };
+    house[14] = {17, 1, nullptr,    QRect{310,370, hallHeight, hallWidth}, 1, 0, {10,18,-1,-1}};
+    house[15] = {18, 1, nullptr,    QRect{560,370, hallHeight, hallWidth}, 1, 0, {12,20,-1,-1}};
+    house[16] = { 6, 0, lpszName[6],QRect{10 ,470, roomWidth, roomHeight}, 1, 0, {13,17,4,-1} };     // correct
+    house[17] = {19, 1, nullptr,    QRect{160,510, hallWidth, hallHeight}, 1, 0, {16,18,-1,-1}};
+    house[18] = { 7, 0, lpszName[7],QRect{260,470, roomWidth, roomHeight}, 1, 0, {14,17,19,-1}};     // correct
+    house[19] = {20, 1, nullptr,    QRect{410,510, hallWidth, hallHeight}, 1, 0, {18,20,-1,-1}};
+    house[20] = { 8, 0, lpszName[8],QRect{510,470, roomWidth, roomHeight}, 1, 0, {15,19,0,-1} };     // correct
     // add in player starting locations, they only communicate with a hall and can not be moved into.
     house[21] = {21, 2, nullptr,    QRect{445, 15, startWidth,startHeight}, 0, 1, {3,-1,-1,-1}};     // correct
     house[22] = {22, 2, nullptr,    QRect{625,175, startWidth,startHeight}, 0, 1, {7,-1,-1,-1}};     // correct
