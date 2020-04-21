@@ -8,7 +8,7 @@
 3. Download Qt 5.12.3 with the MSVC options selected: https://www.qt.io/download-qt-installer?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4
 4. Download the Qt plugin "Qt Visual Studio Tools" for Visual Studio: https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools-19123
 5. Setup Microsoft Visual Studio Community 2017 to use "msvc2017_64"
-    * In Visual Studio look for the menu "QT VS Tools" And navigae to QT Options > Qt Versions > Name: "msvc2017_64"
+    * In Visual Studio look for the menu "QT VS Tools" and navigate to QT Options > Qt Versions > Name: "msvc2017_64"
 6. Ubuntu 16.04 & g++ version 5.4.0
 
 ## Note: George's GitHub repo:
