@@ -26,4 +26,9 @@ Notes from George: "There is a solution file at the top level (clueless.sln) use
 2. Launching the client from the command line (run as "client.exe -d -n -s <server_IP_address> -p 1337") 
 
 ## Launch the Server
-1. Running the server on a Linux machine (run as clserver)
+### Had connection issues running a VM inside Windows 10
+1. Download the Ubuntu Terminal application from the Microsoft Store: https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab
+2. Download this repository and switch to "minimal"
+3. Run "make" in the server directory to build the executable
+4. Run the executable: $ ./clserver
+5. Check if it's up and running by entering in one of the keyboard commands
