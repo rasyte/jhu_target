@@ -138,8 +138,10 @@ void game(std::vector<pconnInfoT> vecPlayers)
         ++iter;
     }
 
-    // TODO : fix this....sort conn list on avatar, and then start with lowest avatar
-    int player = 0;                  // should be the person that choose Miss Scarlet
+    // sort vecPlayers on avatar, and then start with lowest avatar
+
+    std::sort(vecPlayers.begin(), vecPlayers.end(), [](const pconnInfoT m1, const pconnInfoT m2) {return m1->avatar < m2->avatar;});
+    int player = 0;                  
 
     while(!bWinner)
     {
@@ -147,16 +149,15 @@ void game(std::vector<pconnInfoT> vecPlayers)
         fd_set   rdfs;              // input descriptors to listen on
         struct timeval tv;
        
-        int clisoc = (vecPlayers.at(0))->connfd;                     // get socket to appropriate client
+        int clisoc = (vecPlayers.at(player))->connfd;             // get socket to appropriate client
         
         //send message to play to announce turn
-	std::cout << "[game] sending turn announcement to player: " << player << std::endl;
-	msgT    msg;
-	msg.chCode = CMD_TURN;
-	msg.msgLen = 3 + 12;                      // TODO: hard-coded length of string, chage to dynamic string
-	strcpy(msg.szMsg, "start turn!");
-	int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
-	std::cout << "[game] result of send is: " << nRet << std::endl;
+	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
+	    msgT    msg;
+	    msg.chCode = CMD_TURN;
+	    msg.msgLen = 3 + 12;                      // TODO: hard-coded length of string, chage to dynamic string
+	    strcpy(msg.szMsg, "start turn!");
+	    int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
 
         //TODO : build a select loop to multiplex over players turn 
         bool bTurn = true;
@@ -240,9 +241,9 @@ void game(std::vector<pconnInfoT> vecPlayers)
                 std::cout << "timeout occured" << std::endl;
             }
         }
-        std::cout << "[game] Incrementing to next player" << std::endl;
 
-        player = (player + 1) % cntPlayers;               // increment to next player..
+        player = player + 1;                                // increment to next player..
+        if (player < cntPlayers) player = 0;
         std::cout << "player " << player << "'s turn" << std::endl;
     }
  

@@ -10,7 +10,7 @@
 #include <iterator>
 #include <algorithm>
 
-selectAvatarDlg::selectAvatarDlg(QWidget* parent, QString qba) : QDialog(parent), m_qstrAvatars(qba)
+selectAvatarDlg::selectAvatarDlg(QWidget* parent, QString qba) : QDialog(parent), m_avatar(-1), m_qstrAvatars(qba)
 {
     std::cout << std::endl;
     setupUI();
@@ -40,7 +40,7 @@ void selectAvatarDlg::setupUI()
             pTemp->setEnabled(false);           // avatar has already been selected
             pTemp->setChecked(true);            // show it as selected
         }
-
+        connect(pTemp, SIGNAL(stateChanged(int)), this, SLOT(avatarSelected(int)));
         m_vecPushButton.push_back(pTemp);
     }
 
@@ -62,9 +62,14 @@ void selectAvatarDlg::onDone()
     for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
     {
         if (m_vecPushButton.at(ndx)->isChecked())
+        {
             trial.append('u');
+        }
         else
+        {
             trial.append('a');
+        }
+            
     }
 
     // compare the trial to the original, if the same user had not selected..
@@ -77,4 +82,25 @@ void selectAvatarDlg::onDone()
         m_qstrAvatars = trial;
         QDialog::accept();
     }
+}
+
+void selectAvatarDlg::avatarSelected(int)
+{
+    QCheckBox* pBox = (QCheckBox*)sender();
+
+    if (Qt::Unchecked == pBox->checkState())
+        m_avatar = -1;
+    else if (Qt::Checked == pBox->checkState())
+    {
+        for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
+        {
+            if (m_vecPushButton[ndx] == pBox)
+            {
+                m_avatar = ndx;
+                break;
+            }
+        }
+    }
+        
+
 }

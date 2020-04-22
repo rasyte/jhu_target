@@ -320,14 +320,6 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
         if (QDialog::Accepted == dlg.exec() )
         {
             QString qstrGuess = dlg.getGuess(); 
-            //msgT  msg;
-            //msg.msgLen = HDR_LEN + qstrGuess.length();
-            //msg.chCode = CMD_ACCUSE;
-            //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
-            // need to comvert msg to a qbytearray so we can use signals/slots.
-            //char* buf = new char[msg.msgLen];
-            //memcpy((void*)buf, (void*)&msg, msg.msgLen);
-            //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
             QByteArray qbaMsg = qstrGuess.toUtf8();
 
             emit sendMsg(CMD_ACCUSE, qbaMsg);                                // TODO : send the message to server.....
@@ -341,14 +333,6 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
         if (QDialog::Accepted == dlg.exec())
         {
             QString qstrGuess = dlg.getGuess();
-            //msgT  msg;
-            //msg.msgLen = HDR_LEN + qstrGuess.length();
-            //msg.chCode = CMD_SUGGEST;
-            //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
-            // need to comvert msg to a qbytearray so we can use signals/slots.
-            //char* buf = new char[msg.msgLen];
-            //memcpy((void*)buf, (void*)&msg, msg.msgLen);
-            //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
             QByteArray qbaMsg = qstrGuess.toUtf8();
 
             emit sendMsg(CMD_SUGGEST, qbaMsg);                     // TODO : send the message to server.....
@@ -358,7 +342,7 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
     {
         CLogger::getInstance()->LogMessage("sending turn over message");
         int nRet = QMessageBox::question(this, "end turn", "Do you wish to end your turn?");
-        if(QDialog::Accepted == nRet)
+        if(QMessageBox::Yes == nRet)   
             emit onTurnOver();
     }
 }
@@ -404,6 +388,10 @@ void mainWnd::selectAvatar(QString  avatars)
     if (QDialog::Accepted == dlg.exec())
     {
         QString   newList = dlg.getAvatars();
+        int       avatar = dlg.getAvatar();
+        QString   curTitle = this->windowTitle();
+        curTitle += QString(" - playing %1").arg(lpszSuspects[avatar]);
+        this->setWindowTitle(curTitle);
         CLogger::getInstance()->LogMessage("[mainWnd]: sending to server:");
         for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
         {
@@ -446,6 +434,7 @@ void mainWnd::onInit()
 
 void mainWnd::onTurn()
 {
+    CLogger::getInstance()->LogMessage("displaying turn alert!");
     QMessageBox::information(this, "Turn alert", "Your turn, press O to end turn");
 }
 
@@ -512,14 +501,6 @@ void mainWnd::doSuggestion(int room)
     if (QDialog::Accepted == dlg.exec())
     {
         QString qstrGuess = dlg.getGuess();
-        //msgT  msg;
-        //msg.msgLen = HDR_LEN + qstrGuess.length();
-        //msg.chCode = CMD_SUGGEST;
-        //strcpy(msg.szMsg, qstrGuess.toStdString().c_str());
-        // need to comvert msg to a qbytearray so we can use signals/slots.
-        //char* buf = new char[msg.msgLen];
-        //memcpy((void*)buf, (void*)&msg, msg.msgLen);
-        //QByteArray  qbaMsg = QByteArray::fromRawData(buf, msg.msgLen);
         QByteArray qbaMsg = qstrGuess.toUtf8();
 
         emit sendMsg(CMD_SUGGEST, qbaMsg);                                // TODO : send the message to server.....
