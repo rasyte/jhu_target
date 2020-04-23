@@ -7,6 +7,8 @@ class QSettings;
 
 class settingDlg:public QDialog
 {
+    Q_OBJECT 
+
 public:
     settingDlg(QWidget*, QSettings*);
 

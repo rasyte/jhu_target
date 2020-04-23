@@ -49,6 +49,18 @@
     <ClCompile Include="gameWorker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameMenuDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuessDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selectAvatarDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainWnd.h">
@@ -60,6 +72,21 @@
     <QtMoc Include="gameWorker.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="settingDlg.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GameMenuDlg.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GuessDlg.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selectAvatarDlg.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="gameBoard.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainWnd.ui">
@@ -69,6 +96,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="settingDlg.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="GameMenuDlg.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="suggestionDlg.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="selectAvatar.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -87,14 +123,20 @@
     <ClInclude Include="x64\Debug\uic\ui_settingDlg.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="settingDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XGetopt.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_GameMenuDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_suggestionDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_selectAvatar.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

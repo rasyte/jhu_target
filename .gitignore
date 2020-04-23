@@ -1,0 +1,5 @@
+*.log
+client/x64/
+server/Debug/
+server/Release/
+server/x64/

@@ -1,18 +1,37 @@
+#include "../common/common.h"
 #include "gameWorker.h"
 #include "logger.h"
-#include <winsock2.h>
-#include <ws2tcpip.h>
+
+#ifdef __WIN
+  #include <winsock2.h>
+  #include <ws2tcpip.h>
+#else
+  #include <sys/types.h>
+  #include <sys/socket.h>
+  #include <arpa/inet.h>
+
+  #include <unistd.h>
+#endif
+
 #include <time.h>
-
+#include <QCoreApplication>
 #include <QSettings>
+#include <QVector>
 
-const int HDR_LEN = 3;                         // out message header length
+#include <iostream>
+#include <iterator>
+#include <algorithm>
+
+//const int HDR_LEN = 3;                         // out message header length
 
 extern int networkError();
+std::vector<int>  g_vecCards;                    // TODO : figure out how to make this work with signals/slots
 
 gameWorker::gameWorker(char* serverIP, short sPort): m_sIP(nullptr), m_sPort(-1)
 {
-    CLogger::getInstance()->LogMessage("gameWorker constructor");
+    CLogger::getInstance()->LogMessage("gameWorker] -- gameWorker constructor");
+
+    m_bConnected = false;
     
     if (serverIP != nullptr)
     {
@@ -25,16 +44,25 @@ gameWorker::gameWorker(char* serverIP, short sPort): m_sIP(nullptr), m_sPort(-1)
 
 gameWorker::~gameWorker()
 {
-    CLogger::getInstance()-> LogMessage("gameWorker destructor");
+    CLogger::getInstance()-> LogMessage("[gameWorker] -- gameWorker destructor");
+    if (m_bConnected)
+    {
+        disconnectServer();
+    }
     if (m_sIP != nullptr) delete[] m_sIP;
+}
+
+void gameWorker::quit()
+{
+    CLogger::getInstance()->LogMessage("[gameWorker] -- resetting m_bRun to false");
+    m_bRun = false;
 }
 
 void gameWorker::process()
 {
-    CLogger::getInstance()->LogMessage("worker alive and running");
+    CLogger::getInstance()->LogMessage("[gameWorker] -- worker alive and running");
 
-    
-    if (connectServer())
+    if ((m_bConnected = connectServer()))
     {
         m_bRun = true;
         fd_set                  rdfs;               // input descriptor to listen on...
@@ -42,6 +70,7 @@ void gameWorker::process()
 
         while (m_bRun)
         {
+            CLogger::getInstance()->LogMessage("[gameWorker] -- top of while loop");
             FD_ZERO(&rdfs);
             FD_SET(m_soc, &rdfs);               // monitor our listening socket for input
 
@@ -51,9 +80,9 @@ void gameWorker::process()
             int ret = select(m_soc + 1, &rdfs, nullptr, nullptr, &tv);
             if (-1 == ret)
             {
-                CLogger::getInstance()->LogMessage("select failed");
+                CLogger::getInstance()->LogMessage("[gameWorker] -- select failed error is %d\n",networkError());
                 // TODO : we need to show this in an error dialog...
-                m_bRun = false;                 // QUESTION : is this the correct behavior, close connection?
+                //m_bRun = false;                 // QUESTION : is this the correct behavior, close connection?
             }
             else if (ret > 0)
             {
@@ -65,7 +94,7 @@ void gameWorker::process()
                     char  hdr[HDR_LEN];
 
                     recv(m_soc, &hdr[0], HDR_LEN, 0);                // read in header...
-                    short msgLen = ntohs((hdr[0] << 8) | hdr[1]);    // get message length from header
+                    short msgLen = hdr[0];                           // get message length
                     unsigned char cmd = hdr[2];                      // get command from header
                     try
                     {
@@ -73,7 +102,6 @@ void gameWorker::process()
                         {
                             char* buf = new char[msgLen - 3];
                             recv(m_soc, buf, msgLen - 3, 0);
-                        
 
                             switch (cmd)
                             {
@@ -90,52 +118,81 @@ void gameWorker::process()
                                 {
                                     break;
                                 }
-                                case CMD_ACCUSE:                                // got an accquision from server
+                                case CMD_ACCUSE:                                // got an accusation from server
                                 {
                                     break;
                                 }
                                 case CMD_INIT:                                  // got a board initialization from server
                                 {
+                                    char* cards = new char[msgLen];
+                                    memcpy(cards, buf, msgLen);
+                                    for (int ndx = 0; ndx < msgLen; ndx++)
+                                    {
+                                        g_vecCards.push_back((char)cards[ndx]); 
+                                    }
+
+                                    emit onInit();
                                     break;
                                 }
-                                case CMD_PLAYER_JOIN:
+                                case CMD_TURN:
+                                {
+                                    CLogger::getInstance()->LogMessage("[gameWorker] In CMD_TURN handler");
+                                    emit onTurn();
+                                    break;
+                                }
+                                case CMD_PLAYER_JOIN:                           // player joined the game
                                 {
                                     break;
                                 }
+                                case CMD_GAME_BEGIN:                            // game is starting soon....
+                                {
+                                    emit gameBegin(QString(buf));
+                                    break;
+                                }
+                                case CMD_GAME_SELECT:                           // character to select avatar...
+                                {
+                                    emit selectAvatar(QString(buf));
+                                    break;
+                                }
+                                case CMD_SHUTDOWN:
+                                {
+                                    emit serverShutdown(QString(buf));
+                                    m_bRun = false;
+                                    break;
+                                }
                                 default:
-                                    CLogger::getInstance()->LogMessage("Unknown message, command %d\n", cmd);
+                                    CLogger::getInstance()->LogMessage("[gameWorker] -- Unknown message, command %d\n", cmd);
                             }
                             delete[] buf;
                         }
                     }
                     catch (std::bad_alloc)
                     {
-                        CLogger::getInstance()->LogMessage("failed to allocate buffer of message contents\n");
+                        CLogger::getInstance()->LogMessage("[gameWorker] -- failed to allocate buffer of message contents\n");
                         m_bRun = false;
                     }
                 }
                 else                                   // this should not happen
                 {
-                    CLogger::getInstance()->LogMessage("unexpected file descriptor signaled?");
+                    CLogger::getInstance()->LogMessage("[gameWorker] -- unexpected file descriptor signaled?");
                 }
             }
             else
             {
-                CLogger::getInstance()->LogMessage("timeout has occured");
-                // we should allow QT to process messages here....
+                //CLogger::getInstance()->LogMessage(" Worker: timeout has occured");
+                QCoreApplication::processEvents();  // force QT to process messages here....
+                
             }
-
         }
 
-        disconnectServer();
-
-
+        // TODO : we are bailing out of the while loop...probably need to hang-up on server
+        //      : dtor calls disconnect server....should we send a disconnect mesage to server so out
+        //      : connection is cleared from all queues?
     }
     else
     {
-        CLogger::getInstance()->LogMessage("server connect failed, error is %d\n", networkError());
+        CLogger::getInstance()->LogMessage("[gameWorker] -- server connect failed, error is %d\n", networkError());
     }
-
 
     emit finished();
 }
@@ -146,7 +203,7 @@ bool gameWorker::connectServer()
     bool    bRet = false;
     QString qstrServer;
     short   sPort;
-    CLogger::getInstance()->LogMessage("attempting to connect to server");
+    CLogger::getInstance()->LogMessage("[gameWorker] -- attempting to connect to server");
 
     if (-1 != (m_soc = socket(AF_INET, SOCK_STREAM, 0)))
     {
@@ -161,7 +218,7 @@ bool gameWorker::connectServer()
             qstrServer = QString(m_sIP);
         }
 
-        if (m_sPort = -1)
+        if (m_sPort == -1)
         {
             sPort = setting.value("port", "").toString().toShort();
         }
@@ -172,7 +229,7 @@ bool gameWorker::connectServer()
 
         struct sockaddr_in  serverAddr;
         serverAddr.sin_family = AF_INET;
-        serverAddr.sin_addr.s_addr = inet_addr(qstrServer.toStdString().c_str());
+        serverAddr.sin_addr.s_addr = inet_addr(qstrServer.toStdString().c_str());  
         serverAddr.sin_port = htons(sPort);
 
         if (-1 != ::connect(m_soc, (const sockaddr*)&serverAddr, sizeof(serverAddr)))
@@ -181,17 +238,47 @@ bool gameWorker::connectServer()
         }
         else
         {
-            CLogger::getInstance()->LogMessage("Failed to connect to server, error: %d\n", networkError());
+            CLogger::getInstance()->LogMessage("[gameWorker] -- Failed to connect to server, error: %d\n", networkError());
             emit error("failed to connect to server, check network connections");
         }
 
     }
     else
     {
-        CLogger::getInstance()->LogMessage("failed to open socket, error %d\n", networkError());
+        CLogger::getInstance()->LogMessage("[gameWorker] -- failed to open socket, error %d\n", networkError());
     }
 
     return bRet;
+}
+
+
+void gameWorker::sendMsg(int cmd, QByteArray qbaMsg)
+{
+    CLogger::getInstance()->LogMessage("got a request to send a message\n");
+
+    QString    qstrMsg(qbaMsg.constData());
+    msgT   msg;
+    msg.msgLen = 3 + qstrMsg.length();
+    msg.chCode = cmd;                
+    strcpy(msg.szMsg, qstrMsg.toStdString().c_str());
+    int nRet = send(m_soc, (const char*)&msg, msg.msgLen, 0);
+
+
+    CLogger::getInstance()->LogMessage("done sending message");
+}
+
+
+void gameWorker::onTurnOver()
+{
+    const char* str = "turn over";
+    CLogger::getInstance()->LogMessage("got a turn over message\n");
+
+    msgT   msg;
+    msg.msgLen = HDR_LEN + strlen(str);                    
+    msg.chCode = CMD_TURN_OVER;
+    strcpy(msg.szMsg, str);
+
+    int nRet = send(m_soc, (const char*)&msg, msg.msgLen, 0);
 }
 
 
@@ -201,12 +288,12 @@ void gameWorker::disconnectServer()
 #ifdef __WIN
     if (0 != closesocket(m_soc))
     {
-        CLogger::getInstance()->LogMessage("failed to close socket, error %d\n", networkError());
+        CLogger::getInstance()->LogMessage("[gameWorker] -- failed to close socket, error %d\n", networkError());
     }
 #else
     if (0 != close(m_soc))
     {
-        CLogger::::getInstance()->LogMessage("failed to close socket, error %d\n", networkError());
+        CLogger::getInstance()->LogMessage("[gameWorker] -- failed to close socket, error %d\n", networkError());
     }
 #endif
 }
