@@ -92,6 +92,7 @@
     <ClCompile Include="mainWnd.cpp" />
     <ClCompile Include="selectAvatarDlg.cpp" />
     <ClCompile Include="settingDlg.cpp" />
+    <ClCompile Include="util.cpp" />
     <ClCompile Include="XGetopt.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,7 @@
     <ClInclude Include="logger.h" />
     <QtMoc Include="settingDlg.h" />
     <QtMoc Include="selectAvatarDlg.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="x64\Debug\uic\ui_GameMenuDlg.h" />
     <ClInclude Include="x64\Debug\uic\ui_loginDialog.h" />
     <ClInclude Include="x64\Debug\uic\ui_mainWnd.h" />

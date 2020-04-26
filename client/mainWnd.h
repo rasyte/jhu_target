@@ -18,6 +18,7 @@ public:
     void keyPressEvent(QKeyEvent* pevt);
     
     int  getCurrentLoc() { return m_nCurrentLoc; }
+    void updateLocs(QMap<int, QPoint>*);
 
 signals:
     void sendMsg(int, QByteArray);
@@ -31,6 +32,8 @@ private slots:
     void selectAvatar(QString);
     void onInit();
     void onTurn();
+    void doSuggestRsp(QByteArray);
+    void doAccuseRsp(QByteArray);
     // slots for the main game menu...
     void onSettings();
     void onConnect();
@@ -47,18 +50,20 @@ private:
     void createConnections();
     void createWorker(char*, short);
 
-    QTextEdit*       m_txtState;   
-    QLabel*          m_map;
-    gameBoard*       m_pBoard;
-    QThread*         m_pThread;
-    gameWorker*      m_pWorker;
-    int              m_nCurrentLoc;
+    QTextEdit*         m_txtState;   
+    QLabel*            m_map;
+    gameBoard*         m_pBoard;
+    QThread*           m_pThread;
+    gameWorker*        m_pWorker;
+    //QMap<int, QPoint>  m_mapLocs;        // map of avatar and their current locations
+    int                m_nCurrentLoc;
+    //int                m_nAvatar;
     //QVector<QLabel*> m_qvecCards;
-    QLabel*          m_card1;
-    QLabel*          m_card2;
-    QLabel*          m_card3;
-    QLabel*          m_card4;
-    QLabel*          m_card5;
-    QLabel*          m_card6;
+    QLabel*            m_card1;
+    QLabel*            m_card2;
+    QLabel*            m_card3;
+    QLabel*            m_card4;
+    QLabel*            m_card5;
+    QLabel*            m_card6;
 
 };

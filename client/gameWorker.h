@@ -30,6 +30,8 @@ signals:
     void selectAvatar(QString);
     void onInit();
     void onTurn();
+    void onSuggestRsp(QByteArray);
+    void onAccuseRsp(QByteArray);
 
 private:
     bool     m_bRun;

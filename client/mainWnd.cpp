@@ -22,6 +22,7 @@
 #include "GuessDlg.h"
 #include "selectAvatarDlg.h"
 #include "../common/common.h"
+#include "util.h"
 
 
 extern std::vector<int>  g_vecCards;
@@ -187,6 +188,8 @@ void mainWnd::setupUI()
 
     // build state mangement window...
     m_txtState = new QTextEdit(centralWidget);
+    m_txtState->setReadOnly(true);
+    m_txtState->setFont(font);
     m_txtState->setObjectName(QString::fromUtf8("m_txtState"));
     m_txtState->setGeometry(QRect(20, 620, 861, 241));
 
@@ -282,6 +285,8 @@ void mainWnd::createWorker(char* sIP, short sPort)
     connect(m_pWorker, SIGNAL(onInit()), this, SLOT(onInit()));
     connect(m_pWorker, SIGNAL(onTurn()), this, SLOT(onTurn()));
     connect(m_pWorker, SIGNAL(selectAvatar(QString)), this, SLOT(selectAvatar(QString)));
+    connect(m_pWorker, SIGNAL(onSuggestRsp(QByteArray)), this, SLOT(doSuggestRsp(QByteArray)));
+    connect(m_pWorker, SIGNAL(onAccuseRsp(QByteArray)), this, SLOT(doAccuseRsp(QByteArray)));
 
     connect(this, SIGNAL(sendMsg(int, QByteArray)), m_pWorker, SLOT(sendMsg(int, QByteArray)));
     connect(this, SIGNAL(onTurnOver()), m_pWorker, SLOT(onTurnOver()));
@@ -347,6 +352,19 @@ void mainWnd::keyPressEvent(QKeyEvent* pevt)
     }
 }
 
+void mainWnd::updateLocs(QMap<int, QPoint>* pMap)
+{
+    std::cout << "in mainWnd::updateLocs" << std::endl;
+
+    for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
+    {
+        std::cout << "suspect " << ndx << " is now at: (" << (pMap->value(ndx)).x() << ", " << (pMap->value(ndx)).y() << std::endl;
+    }
+    // TODO : we do not need the exact location, the the room/hall moved to.
+    // TODO : send updated positions to the server
+    // TODO : need to write a function to handle update coming back from server (will need to pass message gameBoard
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // private slots:
@@ -357,7 +375,8 @@ void mainWnd::errorString(QString msg)
 
 void mainWnd::shutdown(QString msg)
 {
-    QString strHtml= QString("<font color=\"red\">%1</font>").arg(msg);
+    QString strHtml= QString("<font color=\"red\">%1</font><par>").arg(msg);
+    m_txtState->moveCursor(QTextCursor::End);
     m_txtState->insertHtml(strHtml);
 
 }
@@ -370,8 +389,9 @@ void mainWnd::heartBeat(QString msg)
 
 void mainWnd::gameBegin(QString msg)
 {
-    QString strHtml = QString("%1").arg(msg);
-    m_txtState->insertHtml(strHtml);
+    QString strHtml = QString("%1\n").arg(msg);
+    m_txtState->moveCursor(QTextCursor::End);
+    m_txtState->insertPlainText(strHtml);
 }
 
 void mainWnd::selectAvatar(QString  avatars)
@@ -388,9 +408,9 @@ void mainWnd::selectAvatar(QString  avatars)
     if (QDialog::Accepted == dlg.exec())
     {
         QString   newList = dlg.getAvatars();
-        int       avatar = dlg.getAvatar();
+        //m_nAvatar = dlg.getAvatar();
         QString   curTitle = this->windowTitle();
-        curTitle += QString(" - playing %1").arg(lpszSuspects[avatar]);
+        curTitle += QString(" - playing %1").arg(lpszSuspects[dlg.getAvatar()]);
         this->setWindowTitle(curTitle);
         CLogger::getInstance()->LogMessage("[mainWnd]: sending to server:");
         for (int ndx = 0; ndx < NBR_SUSPECTS; ndx++)
@@ -436,6 +456,35 @@ void mainWnd::onTurn()
 {
     CLogger::getInstance()->LogMessage("displaying turn alert!");
     QMessageBox::information(this, "Turn alert", "Your turn, press O to end turn");
+}
+
+
+void mainWnd::doSuggestRsp(QByteArray qba)
+{
+    printQBA(&qba);
+    int avatar = qba.at(0) - '0';  // convert from hex representation to integers.
+    int suspect = qba.at(1) - '0';
+    int weapon = qba.at(2) - '0';
+    int room = qba.at(3) - '0';
+    QString strHtml = QString("%1 suggests Mr. Boddy was killed by %2 in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    m_txtState->moveCursor(QTextCursor::End);
+    m_txtState->moveCursor(QTextCursor::Down);
+    m_txtState->insertPlainText(strHtml);
+}
+
+
+
+void mainWnd::doAccuseRsp(QByteArray qba)
+{ 
+    int avatar = qba.at(0) - '0';
+    int suspect = qba.at(1) - '0';
+    int weapon = qba.at(2) - '0';
+    int room = qba.at(3) - '0';
+
+    QString strHtml = QString("%1 accused %2 of killing Mr. Boddy in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    m_txtState->moveCursor(QTextCursor::End);
+    m_txtState->insertPlainText(strHtml);
+
 }
 
 void mainWnd::onThreadOver()
@@ -485,10 +534,6 @@ void mainWnd::currentLoc(int loc)
 {
     std::cout << "player current location is: " << loc << std::endl;
     m_nCurrentLoc = loc;
-    // TODO : send message to server
-    // TODO : make sure we have a CMD_MOVE implemented in server 
-    // TODO : make sure we have a handle in the gameWorker to respond to the response from a move message from server
-    // TODO : probably will need to implement something to move tokens programmatically.
 }
 
 

@@ -1,4 +1,5 @@
-#include "manager.h"
+
+#include "game.h"
 #include "../common/common.h"
 
 #include <ctime>
@@ -9,6 +10,7 @@
 #include <algorithm>
 
 const char* szWelcomeMsg = "Welcome to Clue-less, game starting soon\0";
+const char* szStart = "start Turn!";
 
 void game(std::vector<pconnInfoT> vecPlayers)
 {
@@ -41,11 +43,9 @@ void game(std::vector<pconnInfoT> vecPlayers)
             
         send(fdClient, (const char*)&msg, msg.msgLen, 0);           // sent welcome message
 
-        // build avatar select message...
+	;,        // build avatar select message...
         std::cout << "[game] sending select message to player " << std::endl;
-        std::cout << "[game] available avatars are: ";
-        std::copy(avatar, avatar + NBR_SUSPECTS, out_it);
-        std::cout << std::endl;
+       
         msg.msgLen = 3 + NBR_SUSPECTS;
         msg.chCode = CMD_GAME_SELECT;
         memcpy(msg.szMsg, avatar, NBR_SUSPECTS);
@@ -64,13 +64,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
             }
         }
 
-        std::cout << "[game] player " << (*iter)->player << " choose avatar " << (*iter)->avatar << std::endl;
-
-        memcpy(avatar, newAvatar, NBR_SUSPECTS);                    // replace original list with new list
-        std::cout << "[game] new list of avatars are: ";
-        std::copy(avatar, avatar + NBR_SUSPECTS, out_it);
-        std::cout << std::endl;
-
+	memcpy(avatar, newAvatar, NBR_SUSPECTS);             // replace original list with new list
         ++iter;
     }
 
@@ -90,13 +84,14 @@ void game(std::vector<pconnInfoT> vecPlayers)
         int cardNbr = 10 * j;
         for (int ndx = lims[j]; ndx < lims[j+1]; ndx++)
         {
-            //if (file.nSuspect == cardNbr)   // skip if in case-file
             if ((file[j] + 10 * j) == cardNbr)
                 cardNbr = cardNbr + 1;
             deck[ndx] = cardNbr++;
 
         }
     }
+    std::cout << "[game] deck of cards is: ";
+    printBuf(deck, 18);
     
     std::cout << "[game] shuffling remaing cards..." << std::endl;
     for (int ndx = 0; ndx < 18; ndx++)
@@ -104,6 +99,8 @@ void game(std::vector<pconnInfoT> vecPlayers)
         int target = rand() % 18;               // pick a card at random
         std::swap(deck[ndx], deck[target]);     // swap cards
     }
+    std::cout << "[game] shuffled deck is: ";
+    printBuf(deck, 18);
 
 
     std::cout << "[game] dealing cards to players...." << std::endl ;
@@ -133,38 +130,44 @@ void game(std::vector<pconnInfoT> vecPlayers)
         msg.chCode = CMD_INIT;
         msg.msgLen = 3 + (*iter)->cards.size();
         memcpy(msg.szMsg, (*iter)->cards.data(), (*iter)->cards.size());
+	std::cout << "cards sent to player: " << (*iter)->player;
+	printBuf(msg.szMsg, (*iter)->cards.size());
+	std::cout << std::endl;
         send(clisoc, (const char*)&msg, msg.msgLen, 0);           // send init message
 
         ++iter;
     }
 
+
     // sort vecPlayers on avatar, and then start with lowest avatar
-
-    std::sort(vecPlayers.begin(), vecPlayers.end(), [](const pconnInfoT m1, const pconnInfoT m2) {return m1->avatar < m2->avatar;});
+    std::sort(vecPlayers.begin(), vecPlayers.end(), [](const pconnInfoT m1, const pconnInfoT m2){return m1->avatar < m2->avatar; });
     int player = 0;                  
-
+ 
     while(!bWinner)
     {
         int  ret;                   // return value from select
         fd_set   rdfs;              // input descriptors to listen on
         struct timeval tv;
        
-        int clisoc = (vecPlayers.at(player))->connfd;             // get socket to appropriate client
+        int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
+	int avatar = (vecPlayers.at(player))->avatar;
         
         //send message to play to announce turn
-	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
-	    msgT    msg;
-	    msg.chCode = CMD_TURN;
-	    msg.msgLen = 3 + 12;                      // TODO: hard-coded length of string, chage to dynamic string
-	    strcpy(msg.szMsg, "start turn!");
-	    int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
+	std::cout << "[game] sending turn announcement to player: " << player << std::endl;
+	std::cout << "[game] player " << player << " is using avatar " << avatar << std::endl;
+	msgT    msg;
+	msg.chCode = CMD_TURN;
+	msg.msgLen = 3 + strlen(szStart);                      
+	strcpy(msg.szMsg,szStart);
+	int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
+	std::cout << "[game] result of send is: " << nRet << std::endl;
 
-        //TODO : build a select loop to multiplex over players turn 
+        
         bool bTurn = true;
 
         while (bTurn)
         {
-            tv.tv_sec = 5;            // set timeout for 5 sec
+            tv.tv_sec = 1;            // set timeout for 1 sec
             tv.tv_usec = 0;
 
             FD_ZERO(&rdfs);
@@ -205,22 +208,52 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 }
                                 case CMD_SUGGEST:                               // got a suggestion from server
                                 {
-                                    std::cout << "[game] read from client is: " << buf << std::endl;
-                                    // TODO : prove or disprove suggestion
-                                    // TODO : rebroadcast to all playing, along with results
-                                    break;
+				  // TODO : prove or disprove suggestion
+
+				  // rebroadcast to all players...
+				  char* nBuf = new char[4];
+				  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
+				  
+				  msgT msg;
+				  msg.msgLen = HDR_LEN+4;
+				  msg.chCode=CMD_SUGGEST_RSP;
+				  memcpy(msg.szMsg, nBuf, 4);
+
+				  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
+				  while(vecPlayers.end() != iter1)
+				  {
+				    send((*iter1)->connfd, &msg, msg.msgLen, 0);
+				    ++iter1;
+				  }
+				  
+                                  break;
                                 }
                                 case CMD_ACCUSE:                                // got an accusation from server
                                 {
-                                    std::cout << "[game] read from client is: " << buf << std::endl;
-                                    // TODO : prove or disprove accusation
-                                    // TODO : rebroadcast to all playing, along with results
-                                    break;
+				  // TODO : prove or disprove accusation
+
+				  // rebroadcast to all players....
+				  char* nBuf = new char[4];
+				  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
+
+				  msgT msg;
+				  msg.msgLen = HDR_LEN+4;
+				  msg.chCode=CMD_ACCUSE_RSP;
+				  memcpy(msg.szMsg, nBuf, 4);
+
+				  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
+				  while(vecPlayers.end() != iter1)
+				  {
+				    send((*iter1)->connfd, &msg, msg.msgLen, 0);
+				    ++iter1;
+				  }
+
+                                  break;
                                 }
                                 case CMD_TURN_OVER:
                                 {
-                                    std::cout << "Players" << (*iter)->player << " turn is over " << std::endl;
-                                    bTurn = false;                             // signal turn is over
+				  std::cout << "Players " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
+                                  bTurn = false;                             // signal turn is over
                                 }
                                 default:
                                     std::cout << "[game] Unknown command:" << cmd << std::endl;
@@ -238,17 +271,30 @@ void game(std::vector<pconnInfoT> vecPlayers)
             }
             else
             {
-                std::cout << "timeout occured" << std::endl;
+	      //std::cout << "timeout occured" << std::endl;
             }
         }
 
-        player = player + 1;                                // increment to next player..
-        if (player < cntPlayers) player = 0;
-        std::cout << "player " << player << "'s turn" << std::endl;
+	
+        player = player + 1;                       // increment to next player..
+	if(cntPlayers <= player ) player = 0;
+	std::cout << "player " << player << "'s turn" << std::endl;
     }
  
     // TODO : send game closing message
     // TODO : close all player sockets
 
     std::cout << "[game] bottom of game loop" << std::endl;
+}
+
+
+
+void printBuf(const char* buf, int len)
+{
+  std::cout << "[";
+  for(int ndx = 0; ndx < len; ndx++)
+  {
+    std::cout << std::uppercase << std::showbase << std::hex << buf[ndx] << " ";
+  }
+  std::cout << "]" << std::endl;
 }
