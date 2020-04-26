@@ -1,5 +1,6 @@
 #include "../common/common.h"
 #include "gameWorker.h"
+#include "util.h"
 #include "logger.h"
 
 #ifdef __WIN
@@ -100,7 +101,7 @@ void gameWorker::process()
                     {
                         if (msgLen > 3)                                  // remember message length includes header
                         {
-                            char* buf = new char[msgLen - 3];
+                            char* buf = new char[msgLen - 3 + 1];        // add space for null terminator if needed
                             recv(m_soc, buf, msgLen - 3, 0);
 
                             switch (cmd)
@@ -114,12 +115,21 @@ void gameWorker::process()
                                 {
                                     break;
                                 }
-                                case CMD_SUGGEST:                               // got a suggestion from server
+                                case CMD_SUGGEST_RSP:                               // got a suggestion from server
                                 {
+                                    std::cout << "[gameWorker] in cmd_suggest_rsp, buffer is:" << std::endl;
+                                    printBuffer(buf, 4);
+
+                                    QByteArray qba(buf, 4);
+                                    std::cout << "[gameWorker] in cmd_suggest_rsp, qba is:" << std::endl;
+                                    printQBA(&qba);
+                                    emit onSuggestRsp(qba);
                                     break;
                                 }
-                                case CMD_ACCUSE:                                // got an accusation from server
+                                case CMD_ACCUSE_RSP:                                // got an accusation from server
                                 {
+                                    QByteArray qba(buf, 4);
+                                    emit onAccuseRsp(qba);
                                     break;
                                 }
                                 case CMD_INIT:                                  // got a board initialization from server
@@ -146,6 +156,7 @@ void gameWorker::process()
                                 }
                                 case CMD_GAME_BEGIN:                            // game is starting soon....
                                 {
+                                    buf[msgLen - 3] = '\0';                     // force a null terminator
                                     emit gameBegin(QString(buf));
                                     break;
                                 }
@@ -297,3 +308,6 @@ void gameWorker::disconnectServer()
     }
 #endif
 }
+
+
+

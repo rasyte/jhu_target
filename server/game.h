@@ -8,5 +8,7 @@
 
 void game(std::vector<pconnInfoT>);
 
+void printBuf(const char*, int);
+
 
 #endif
