@@ -43,7 +43,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
             
         send(fdClient, (const char*)&msg, msg.msgLen, 0);           // sent welcome message
 
-	;,        // build avatar select message...
+	;       // build avatar select message...
         std::cout << "[game] sending select message to player " << std::endl;
        
         msg.msgLen = 3 + NBR_SUSPECTS;

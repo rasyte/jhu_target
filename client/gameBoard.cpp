@@ -10,7 +10,7 @@
 #include <iterator>
 #include <algorithm>
 
-const QPoint  startLoc[6] = { {460, 30}, {640, 190}, {460, 585}, {210, 585}, {30, 430},{30, 190} };
+//const QPoint  startLoc[6] = { {460, 30}, {640, 190}, {460, 585}, {210, 585}, {30, 430},{30, 190} };
 const QColor  tokenClr[6] = { Qt::red, Qt::yellow, Qt::white, Qt::green, QColor(128, 128, 255), QColor(128, 0, 128) };
 const char*   lpszName[9] = { "Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room", "Conservatory", "Ballroom", "Kitchen" };
 
