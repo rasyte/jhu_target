@@ -19,7 +19,7 @@ static const int cntSuspects = sizeof(lpszSuspects) / sizeof(lpszSuspects[0]);
 static const int cntWeapons = sizeof(lpszWeapons) / sizeof(lpszSuspects[0]);
 static const int cntRooms = sizeof(lpszRooms) / sizeof(lpszRooms[0]);
 
-static const QPoint  startLoc[6] = { {460, 30}, {640, 190}, {460, 585}, {210, 585}, {30, 430},{30, 190} };
+//static const QPoint  startLoc[6] = { {460, 30}, {640, 190}, {460, 585}, {210, 585}, {30, 430},{30, 190} };
 
 #ifdef __WIN
 #pragma pack(show)
