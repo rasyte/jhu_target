@@ -287,6 +287,7 @@ void mainWnd::createWorker(char* sIP, short sPort)
     connect(m_pWorker, SIGNAL(selectAvatar(QString)), this, SLOT(selectAvatar(QString)));
     connect(m_pWorker, SIGNAL(onSuggestRsp(QByteArray)), this, SLOT(doSuggestRsp(QByteArray)));
     connect(m_pWorker, SIGNAL(onAccuseRsp(QByteArray)), this, SLOT(doAccuseRsp(QByteArray)));
+    connect(m_pWorker, SIGNAL(onGameOver(QByteArray)), this, SLOT(doGameOver(QByteArray)));
 
     connect(this, SIGNAL(sendMsg(int, QByteArray)), m_pWorker, SLOT(sendMsg(int, QByteArray)));
     connect(this, SIGNAL(onTurnOver()), m_pWorker, SLOT(onTurnOver()));
@@ -472,8 +473,6 @@ void mainWnd::doSuggestRsp(QByteArray qba)
     m_txtState->insertPlainText(strHtml);
 }
 
-
-
 void mainWnd::doAccuseRsp(QByteArray qba)
 { 
     int avatar = qba.at(0) - '0';
@@ -481,10 +480,23 @@ void mainWnd::doAccuseRsp(QByteArray qba)
     int weapon = qba.at(2) - '0';
     int room = qba.at(3) - '0';
 
-    QString strHtml = QString("%1 accused %2 of killing Mr. Boddy in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    QString strHtml = QString("%1 correctly accused %2 of killing Mr. Boddy in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
     m_txtState->moveCursor(QTextCursor::End);
     m_txtState->insertPlainText(strHtml);
 
+}
+
+void mainWnd::doGameOver(QByteArray qba)
+{
+    int avatar = qba.at(0) - '0';
+    int suspect = qba.at(1) - '0';
+    int weapon = qba.at(2) - '0';
+    int room = qba.at(3) - '0';
+
+    //TODO: add accusation details to the the message (player who won (avatar), suspect, weapon and room. 
+    QString strHtml = QString("%1 correctly accused %2 of killing Mr. Boddy in the %3 with the %4.\n\n Game Over! \n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    m_txtState->moveCursor(QTextCursor::End);
+    m_txtState->insertPlainText(strHtml);
 }
 
 void mainWnd::onThreadOver()

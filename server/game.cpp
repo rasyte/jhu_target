@@ -208,51 +208,61 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 }
                                 case CMD_SUGGEST:                               // got a suggestion from server
                                 {
-				  // TODO : prove or disprove suggestion
+				                  // TODO : prove or disprove suggestion
 
-				  // rebroadcast to all players...
-				  char* nBuf = new char[4];
-				  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
+				                  // rebroadcast to all players...
+				                  char* nBuf = new char[4];
+				                  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
 				  
-				  msgT msg;
-				  msg.msgLen = HDR_LEN+4;
-				  msg.chCode=CMD_SUGGEST_RSP;
-				  memcpy(msg.szMsg, nBuf, 4);
+				                  msgT msg;
+				                  msg.msgLen = HDR_LEN+4;
+				                  msg.chCode=CMD_SUGGEST_RSP;
+				                  memcpy(msg.szMsg, nBuf, 4);
 
-				  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
-				  while(vecPlayers.end() != iter1)
-				  {
-				    send((*iter1)->connfd, &msg, msg.msgLen, 0);
-				    ++iter1;
-				  }
+				                  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
+				                  while(vecPlayers.end() != iter1)
+				                  {
+				                    send((*iter1)->connfd, &msg, msg.msgLen, 0);
+				                    ++iter1;
+				                  }
 				  
                                   break;
                                 }
-                                case CMD_ACCUSE:                                // got an accusation from server
+                                case CMD_ACCUSE:                               // got an accusation from server
                                 {
-				  // TODO : prove or disprove accusation
+                                    // rebroadcast to all players....
+                                    char* nBuf = new char[4];
+                                    sprintf(nBuf, "%d%c%c%c", avatar, buf[0], buf[1], buf[2]);
+                                    msgT msg;
+                                    msg.msgLen = HDR_LEN + 4;
 
-				  // rebroadcast to all players....
-				  char* nBuf = new char[4];
-				  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
+                                    //checking if accusation matches case files, 48 here is used to convert from ascii to decimal
+                                    if ((int)file[0] + 48 == (int)buf[0] && (int)file[1] + 48 == (int)buf[1] && (int)file[2] + 48 == (int)buf[2])
+                                    {
+                                        msg.chCode = CMD_GAME_OVER;
+                                        memcpy(msg.szMsg, nBuf, 4);
+                                    }
+                                    else
+                                    {
+                                        //TODO: since accusation is in-correct here more work is needed to make player inactive
+                                        //potentially adding a flag to connInfoT that would allow us to skip that player for a turn
+                                        //need to make sure it still allow that player to get broadcast messages
+                                        msg.chCode = CMD_ACCUSE_RSP;
+                                        memcpy(msg.szMsg, nBuf, 4);
+                                    }
 
-				  msgT msg;
-				  msg.msgLen = HDR_LEN+4;
-				  msg.chCode=CMD_ACCUSE_RSP;
-				  memcpy(msg.szMsg, nBuf, 4);
+                                    std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
+                                    while (vecPlayers.end() != iter1)
+                                    {
+                                        send((*iter1)->connfd, &msg, msg.msgLen, 0);
+                                        ++iter1;
+                                    }
 
-				  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
-				  while(vecPlayers.end() != iter1)
-				  {
-				    send((*iter1)->connfd, &msg, msg.msgLen, 0);
-				    ++iter1;
-				  }
-
-                                  break;
+                                    break;
                                 }
                                 case CMD_TURN_OVER:
                                 {
-				  std::cout << "Players " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
+				                  std::cout << "Players " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
                                   bTurn = false;                             // signal turn is over
                                 }
                                 default:
@@ -271,12 +281,12 @@ void game(std::vector<pconnInfoT> vecPlayers)
             }
             else
             {
-	      //std::cout << "timeout occured" << std::endl;
+	            //std::cout << "timeout occured" << std::endl;
             }
         }
 
 	
-        player = player + 1;                       // increment to next player..
+    player = player + 1;                       // increment to next player..
 	if(cntPlayers <= player ) player = 0;
 	std::cout << "player " << player << "'s turn" << std::endl;
     }
@@ -286,8 +296,6 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
     std::cout << "[game] bottom of game loop" << std::endl;
 }
-
-
 
 void printBuf(const char* buf, int len)
 {

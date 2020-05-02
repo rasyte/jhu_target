@@ -32,6 +32,7 @@ signals:
     void onTurn();
     void onSuggestRsp(QByteArray);
     void onAccuseRsp(QByteArray);
+    void onGameOver(QByteArray);
 
 private:
     bool     m_bRun;

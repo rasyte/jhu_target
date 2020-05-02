@@ -132,6 +132,14 @@ void gameWorker::process()
                                     emit onAccuseRsp(qba);
                                     break;
                                 }
+                                case CMD_GAME_OVER:                                //got game over from server
+                                {
+                                    CLogger::getInstance()->LogMessage("[gameWorker] In CMD_GAME_OVER handler");
+                                    QByteArray qba(buf, 4);
+                                    emit onGameOver(qba);
+                                    m_bRun = false;
+                                    break;
+                                }
                                 case CMD_INIT:                                  // got a board initialization from server
                                 {
                                     char* cards = new char[msgLen];

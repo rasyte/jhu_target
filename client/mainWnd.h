@@ -34,6 +34,7 @@ private slots:
     void onTurn();
     void doSuggestRsp(QByteArray);
     void doAccuseRsp(QByteArray);
+    void doGameOver(QByteArray);
     // slots for the main game menu...
     void onSettings();
     void onConnect();
