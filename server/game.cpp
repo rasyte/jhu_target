@@ -165,8 +165,8 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
         
         bool bTurn = true;
-
-        while (bTurn && !((*iter)->bInactive))
+        bool bActive = true;
+        while (bTurn && bActive)
         {
             tv.tv_sec = 1;            // set timeout for 1 sec
             tv.tv_usec = 0;
@@ -254,6 +254,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                         memcpy(msg.szMsg, nBuf, 4);
                                         //(vecPlayers.at(player))->bInactive ; //player becomes inactive
                                         (*iter)->bInactive = true;
+                                        bActive = false;
                                         std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
                                     }
 
