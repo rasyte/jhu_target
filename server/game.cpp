@@ -253,7 +253,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                         memcpy(msg.szMsg, nBuf, 4);                                        
                                         (vecPlayers.at(player))->bInactive = true; //player becomes inactive
                                         std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
-                                        bTurn = false;
+                                  
                                     }
 
                                     std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
