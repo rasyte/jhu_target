@@ -16,7 +16,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
 {
     bool bWinner = false;
     std::ostream_iterator<int> out_it(std::cout, ", ");
-    int            suspect_file[3];        // case file, three cards
+    char           file[3];                // case file, three cards
     char           deck[18];               // deck after case file has been removed 6 suspect + 6 weapons + 9 rooms = 21. 21-3 = 18
     int            cntPlayers;
      
@@ -69,52 +69,27 @@ void game(std::vector<pconnInfoT> vecPlayers)
     }
 
     std::cout << "[game] generating case file ..." << std::endl;
+ 
+    file[0] = rand() % cntSuspects;
+    file[1] = rand() % cntWeapons;
+    file[2] = rand() % cntRooms;
 
-    // random number generator for the case files
-    suspect_file[0] = rand() % 6 + 0;  // handles 0 through 5 
-    suspect_file[1] = rand() % 6 + 10; // handles 10 through 15
-    suspect_file[2] = rand() % 9 + 20; // handles 20 through 28
+    std::cout << "[game] the case file is (" << (int)file[0] << ", " << (int)file[1] << ", " << (int)file[2] << ")" << std::endl;
 
-    std::cout << "[game] the case file is (" << suspect_file[0] << ", " << suspect_file[1] << ", " << suspect_file[2] << ")" << std::endl;
-
-    // SUSPECTS (cards 0 through 5)
-    int deck_index = 0;
-
-    for (int card_number = 0; card_number < 6; card_number++)
+    // we treat suspects as 0-5; weapons as 10-15; and rooms as 20-28..client will interpret correctly
+    // build deck (without case-file cards)
+    int lims[4] = { 0, 5, 10, 18 };
+    for (int j = 0; j < 3; j++)
     {
-        //std::cout << "CARD INDEX: " << card_number << std::endl;
-        if (card_number == suspect_file[0])
+        int cardNbr = 10 * j;
+        for (int ndx = lims[j]; ndx < lims[j+1]; ndx++)
         {
-            continue; // skip this number
-        }
-        deck[deck_index] = card_number;
-        deck_index++;
-    }
+            if ((file[j] + 10 * j) == cardNbr)
+                cardNbr = cardNbr + 1;
+            deck[ndx] = cardNbr++;
 
-    // WEAPONS (cards 10 through 15)
-    for (int card_number = 10; card_number < 16; card_number++)
-    {
-        //std::cout << "CARD INDEX: " << card_number << std::endl;
-        if (card_number == suspect_file[1])
-        {
-            continue; // skip this number
         }
-        deck[deck_index] = card_number;
-        deck_index++;
     }
-
-    // ROOMS (cards 20 through 28)
-    for (int card_number = 20; card_number < 29; card_number++)
-    {
-        //std::cout << "CARD INDEX: " << card_number << std::endl;
-        if (card_number == suspect_file[2])
-        {
-            continue; // skip this number
-        }
-        deck[deck_index] = card_number;
-        deck_index++;
-    }
-
     std::cout << "[game] deck of cards is: ";
     printBuf(deck, 18);
     
@@ -262,7 +237,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                     msg.msgLen = HDR_LEN + 4;
 
                                     //checking if accusation matches case files, 48 here is used to convert from ascii to decimal
-                                    if ((int)suspect_file[0] + 48 == (int)buf[0] && (int)suspect_file[1] + 48 == (int)buf[1] && (int)suspect_file[2] + 48 == (int)buf[2])
+                                    if ((int)file[0] + 48 == (int)buf[0] && (int)file[1] + 48 == (int)buf[1] && (int)file[2] + 48 == (int)buf[2])
                                     {
                                         msg.chCode = CMD_GAME_OVER;
                                         memcpy(msg.szMsg, nBuf, 4);
@@ -322,23 +297,12 @@ void game(std::vector<pconnInfoT> vecPlayers)
     std::cout << "[game] bottom of game loop" << std::endl;
 }
 
-// prints server buffer to screen
 void printBuf(const char* buf, int len)
 {
-  std::cout << "\n[Command Buffer: ";
+  std::cout << "[";
   for(int ndx = 0; ndx < len; ndx++)
   {
-    // just what is the character
-    std::cout << buf[ndx] << " ";
-
-    // std hex messes with *ALL* of the output
-    //std::cout << std::uppercase << std::showbase << std::hex << buf[ndx] << " ";
-  }
-  std::cout << "]\n[Command Buffer INT: ";
-
-  for(int ndx = 0; ndx < len; ndx++)
-  {
-    std::cout << (unsigned)buf[ndx] << " ";
+    std::cout << std::uppercase << std::showbase << std::hex << buf[ndx] << " ";
   }
   std::cout << "]" << std::endl;
 }

@@ -47,7 +47,7 @@
 
 const char defServer[] = {"192.168.1.19"};
 const unsigned short defPort = 1337;
-const char lpszVersion[] = {"0.5.2"}; // just using today's date for convenience since this has not been updated
+const char lpszVersion[] = {"0.0.5"};
 
 
 bool initWinSock();  // for windows only...need to initialize the socket subsytems
