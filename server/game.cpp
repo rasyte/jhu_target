@@ -143,90 +143,92 @@ void game(std::vector<pconnInfoT> vecPlayers)
     std::sort(vecPlayers.begin(), vecPlayers.end(), [](const pconnInfoT m1, const pconnInfoT m2){return m1->avatar < m2->avatar; });
     int player = 0;                  
  
-    while(!bWinner)
+    while (!bWinner)
     {
         int  ret;                   // return value from select
         fd_set   rdfs;              // input descriptors to listen on
         struct timeval tv;
-       
+
         int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
-	    int avatar = (vecPlayers.at(player))->avatar;
-        bool bInactive = (vecPlayers.at(player))->bInactive;            //player is active by default so this will be set to false 
-        
+        int avatar = (vecPlayers.at(player))->avatar;
+        bool bInactive = (vecPlayers.at(player))->bInactive;              //player is active at start so by default so this will be set to false 
+
         //send message to play to announce turn
-	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
-	    std::cout << "[game] player " << player << " is using avatar " << avatar << std::endl;
-	    msgT    msg;
-	    msg.chCode = CMD_TURN;
-	    msg.msgLen = 3 + strlen(szStart);                      
-	    strcpy(msg.szMsg,szStart);
-	    int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
-	    std::cout << "[game] result of send is: " << nRet << std::endl;
+        std::cout << "[game] sending turn announcement to player: " << player << std::endl;
+        std::cout << "[game] player " << player << " is using avatar " << avatar << std::endl;
 
-        
-        bool bTurn = true;
-        while (bTurn && bInactive == false)
+        if (bInactive == false)         //if player is active
         {
-            tv.tv_sec = 1;            // set timeout for 1 sec
-            tv.tv_usec = 0;
+            msgT    msg;
+            msg.chCode = CMD_TURN;
+            msg.msgLen = 3 + strlen(szStart);
+            strcpy(msg.szMsg, szStart);
+            int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
+            std::cout << "[game] result of send is: " << nRet << std::endl;
 
-            FD_ZERO(&rdfs);
-            FD_SET(0, &rdfs);
-            FD_SET(clisoc, &rdfs);
+            bool bTurn = true;
+            while (bTurn)
+            {   
+                tv.tv_sec = 1;            // set timeout for 1 sec
+                tv.tv_usec = 0;
 
-            ret = select(clisoc + 1, &rdfs, nullptr, nullptr, &tv);
-            if (-1 == ret)
-            {
-                std::cerr << "select failed" << std::endl;
-                bTurn = false;
-            }
-            else if (ret > 0)
-            {
-                if (FD_ISSET(clisoc, &rdfs))             // client sent us data
+                FD_ZERO(&rdfs);
+                FD_SET(0, &rdfs);
+                FD_SET(clisoc, &rdfs);
+
+                ret = select(clisoc + 1, &rdfs, nullptr, nullptr, &tv);
+                if (-1 == ret)
                 {
-                
-                    //  +--------------+-------------------+---------------------------+
-                    //  | len (2 bytes)| msg code (1 byte) | msg content (variable len |
-                    //  +--------------+-------------------+---------------------------+
-                    char  hdr[HDR_LEN];
-
-                    recv(clisoc, &hdr[0], HDR_LEN, 0);                // read in header...
-                    short msgLen = hdr[0];                            // get message length
-                    unsigned char cmd = hdr[2];                       // get command from header
-                    try
+                    std::cerr << "select failed" << std::endl;
+                    bTurn = false;
+                }
+                else if (ret > 0)
+                {
+                    if (FD_ISSET(clisoc, &rdfs))             // client sent us data
                     {
-                        if (msgLen > 3)                                  // remember message length includes header
-                        {
-                            char* buf = new char[msgLen - 3];
-                            recv(clisoc, buf, msgLen - 3, 0);
 
-                            switch (cmd)
+                        //  +--------------+-------------------+---------------------------+
+                        //  | len (2 bytes)| msg code (1 byte) | msg content (variable len |
+                        //  +--------------+-------------------+---------------------------+
+                        char  hdr[HDR_LEN];
+
+                        recv(clisoc, &hdr[0], HDR_LEN, 0);                // read in header...
+                        short msgLen = hdr[0];                            // get message length
+                        unsigned char cmd = hdr[2];                       // get command from header
+                        try
+                        {
+                            if (msgLen > 3)                                  // remember message length includes header
                             {
+                                char* buf = new char[msgLen - 3];
+                                recv(clisoc, buf, msgLen - 3, 0);
+
+                                switch (cmd)
+                                {
                                 case CMD_MOVE:
                                 {
                                     // TODO : rebroadcast to all playing
                                 }
                                 case CMD_SUGGEST:                               // got a suggestion from server
                                 {
-				                  // TODO : prove or disprove suggestion
+                                    // TODO : prove or disprove suggestion
 
-				                  // rebroadcast to all players...
-				                  char* nBuf = new char[4];
-				                  sprintf(nBuf, "%d%c%c%c", avatar, buf[0],buf[1],buf[2]);
-				  
-				                  msgT msg;
-				                  msg.msgLen = HDR_LEN+4;
-				                  msg.chCode=CMD_SUGGEST_RSP;
-				                  memcpy(msg.szMsg, nBuf, 4);
+                                    // rebroadcast to all players...
+                                    char* nBuf = new char[4];
+                                    sprintf(nBuf, "%d%c%c%c", avatar, buf[0], buf[1], buf[2]);
 
-				                  std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
-				                  while(vecPlayers.end() != iter1)
-				                  {
-				                    send((*iter1)->connfd, &msg, msg.msgLen, 0);
-				                    ++iter1;
-				                  }
-				  
-                                  break;
+                                    msgT msg;
+                                    msg.msgLen = HDR_LEN + 4;
+                                    msg.chCode = CMD_SUGGEST_RSP;
+                                    memcpy(msg.szMsg, nBuf, 4);
+
+                                    std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
+                                    while (vecPlayers.end() != iter1)
+                                    {
+                                        send((*iter1)->connfd, &msg, msg.msgLen, 0);
+                                        ++iter1;
+                                    }
+
+                                    break;
                                 }
                                 case CMD_ACCUSE:                               // got an accusation from server
                                 {
@@ -250,10 +252,11 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                         //need to make sure it still allow that player to get broadcast messages
 
                                         msg.chCode = CMD_ACCUSE_RSP;
-                                        memcpy(msg.szMsg, nBuf, 4);                                        
+                                        memcpy(msg.szMsg, nBuf, 4);
+
                                         (vecPlayers.at(player))->bInactive = true; //player becomes inactive
                                         std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
-                                  
+
                                     }
 
                                     std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
@@ -267,30 +270,30 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 }
                                 case CMD_TURN_OVER:
                                 {
-				                  std::cout << "Player's " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
-                                  bTurn = false;                             // signal turn is over
+                                    std::cout << "Player's " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
+                                    bTurn = false;                             // signal turn is over
                                 }
                                 default:
                                     std::cout << "[game] Unknown command:" << cmd << std::endl;
+                                }
+                                delete[] buf;
                             }
-                            delete[] buf;
+                        }
+                        catch (std::bad_alloc)
+                        {
+                            std::cout << "[game] failed to allocate buffer of message contents";
+                            bTurn = false;
+                            bWinner = true;
                         }
                     }
-                    catch (std::bad_alloc)
-                    {
-                        std::cout << "[game] failed to allocate buffer of message contents";
-                        bTurn = false;
-                        bWinner = true;
-                    }
+                }
+                else
+                {
+                    //std::cout << "timeout occured" << std::endl;
                 }
             }
-            else
-            {
-	            //std::cout << "timeout occured" << std::endl;
-            }
         }
-
-	
+ 	
     player = player + 1;                       // increment to next player..
 	if(cntPlayers <= player ) player = 0;
 	std::cout << "player " << player << "'s turn" << std::endl;
