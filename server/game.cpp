@@ -130,9 +130,9 @@ void game(std::vector<pconnInfoT> vecPlayers)
         msg.chCode = CMD_INIT;
         msg.msgLen = 3 + (*iter)->cards.size();
         memcpy(msg.szMsg, (*iter)->cards.data(), (*iter)->cards.size());
-	std::cout << "cards sent to player: " << (*iter)->player;
-	printBuf(msg.szMsg, (*iter)->cards.size());
-	std::cout << std::endl;
+	    std::cout << "cards sent to player: " << (*iter)->player;
+	    printBuf(msg.szMsg, (*iter)->cards.size());
+	    std::cout << std::endl;
         send(clisoc, (const char*)&msg, msg.msgLen, 0);           // send init message
 
         ++iter;
@@ -151,7 +151,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
        
         int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
 	    int avatar = (vecPlayers.at(player))->avatar;
-        //bool bInactive = (vecPlayers.at(player))->bInactive;
+        bool bInactive = (vecPlayers.at(player))->bInactive;            //player is active by default so this will be set to false 
         
         //send message to play to announce turn
 	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
@@ -165,8 +165,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
         
         bool bTurn = true;
-        bool bActive = true;
-        while (bTurn && bActive)
+        while (bTurn && bInactive == false)
         {
             tv.tv_sec = 1;            // set timeout for 1 sec
             tv.tv_usec = 0;
@@ -251,10 +250,8 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                         //need to make sure it still allow that player to get broadcast messages
 
                                         msg.chCode = CMD_ACCUSE_RSP;
-                                        memcpy(msg.szMsg, nBuf, 4);
-                                        //(vecPlayers.at(player))->bInactive ; //player becomes inactive
-                                        (*iter)->bInactive = true;
-                                        bActive = false;
+                                        memcpy(msg.szMsg, nBuf, 4);                                        
+                                        (vecPlayers.at(player))->bInactive = true; //player becomes inactive
                                         std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
                                     }
 
