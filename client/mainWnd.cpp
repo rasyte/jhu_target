@@ -480,7 +480,7 @@ void mainWnd::doAccuseRsp(QByteArray qba)
     int weapon = qba.at(2) - '0';
     int room = qba.at(3) - '0';
 
-    QString strHtml = QString("%1 incorrectly accused %2 of killing Mr. Boddy in the %3 with the %4. Player %1% is now INACTIVE.\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    QString strHtml = QString("%1 incorrectly accused %2 of killing Mr. Boddy in the %3 with the %4. %1 now is inactive Player.\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
     m_txtState->moveCursor(QTextCursor::End);
     m_txtState->insertPlainText(strHtml);
 

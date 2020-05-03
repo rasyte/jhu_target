@@ -141,9 +141,10 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
     // sort vecPlayers on avatar, and then start with lowest avatar
     std::sort(vecPlayers.begin(), vecPlayers.end(), [](const pconnInfoT m1, const pconnInfoT m2){return m1->avatar < m2->avatar; });
-    int player = 0;                  
+    int player = 0;
+    bool bInactive = false;
  
-    while (!bWinner)
+    while (!bWinner && bInactive==false)
     {
         int  ret;                   // return value from select
         fd_set   rdfs;              // input descriptors to listen on
@@ -151,7 +152,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
         int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
         int avatar = (vecPlayers.at(player))->avatar;
-        bool bInactive = (vecPlayers.at(player))->bInactive;              //player is active at start so by default so this will be set to false 
+        bInactive = (vecPlayers.at(player))->bInactive;              //player is active at start so by default so this will be set to false 
 
         //send message to play to announce turn
         std::cout << "[game] sending turn announcement to player: " << player << std::endl;
