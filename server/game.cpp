@@ -151,7 +151,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
        
         int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
 	    int avatar = (vecPlayers.at(player))->avatar;
-        bool bInactive = (vecPlayers.at(player))->bInactive;
+        //bool bInactive = (vecPlayers.at(player))->bInactive;
         
         //send message to play to announce turn
 	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
@@ -165,7 +165,8 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
         
         bool bTurn = true;
-        while (bTurn && !bInactive)
+
+        while (bTurn && !((*iter)->bInactive))
         {
             tv.tv_sec = 1;            // set timeout for 1 sec
             tv.tv_usec = 0;
@@ -251,7 +252,8 @@ void game(std::vector<pconnInfoT> vecPlayers)
 
                                         msg.chCode = CMD_ACCUSE_RSP;
                                         memcpy(msg.szMsg, nBuf, 4);
-                                        (vecPlayers.at(player))->bInactive = true; //player becomes inactive
+                                        //(vecPlayers.at(player))->bInactive ; //player becomes inactive
+                                        (*iter)->bInactive = true;
                                         std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
                                     }
 
