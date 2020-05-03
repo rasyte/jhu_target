@@ -43,7 +43,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
             
         send(fdClient, (const char*)&msg, msg.msgLen, 0);           // sent welcome message
 
-	;       // build avatar select message...
+	    // build avatar select message...
         std::cout << "[game] sending select message to player " << std::endl;
        
         msg.msgLen = 3 + NBR_SUSPECTS;
@@ -150,22 +150,22 @@ void game(std::vector<pconnInfoT> vecPlayers)
         struct timeval tv;
        
         int clisoc = (vecPlayers.at(player))->connfd;                     // get socket to appropriate client
-	int avatar = (vecPlayers.at(player))->avatar;
+	    int avatar = (vecPlayers.at(player))->avatar;
+        bool bInactive = (vecPlayers.at(player))->bInactive;
         
         //send message to play to announce turn
-	std::cout << "[game] sending turn announcement to player: " << player << std::endl;
-	std::cout << "[game] player " << player << " is using avatar " << avatar << std::endl;
-	msgT    msg;
-	msg.chCode = CMD_TURN;
-	msg.msgLen = 3 + strlen(szStart);                      
-	strcpy(msg.szMsg,szStart);
-	int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
-	std::cout << "[game] result of send is: " << nRet << std::endl;
+	    std::cout << "[game] sending turn announcement to player: " << player << std::endl;
+	    std::cout << "[game] player " << player << " is using avatar " << avatar << std::endl;
+	    msgT    msg;
+	    msg.chCode = CMD_TURN;
+	    msg.msgLen = 3 + strlen(szStart);                      
+	    strcpy(msg.szMsg,szStart);
+	    int nRet = send(clisoc, (const char*)&msg, msg.msgLen, 0);
+	    std::cout << "[game] result of send is: " << nRet << std::endl;
 
         
         bool bTurn = true;
-
-        while (bTurn)
+        while (bTurn && !bInactive)
         {
             tv.tv_sec = 1;            // set timeout for 1 sec
             tv.tv_usec = 0;
@@ -241,14 +241,18 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                     {
                                         msg.chCode = CMD_GAME_OVER;
                                         memcpy(msg.szMsg, nBuf, 4);
+                                        bWinner = true;
                                     }
                                     else
                                     {
                                         //TODO: since accusation is in-correct here more work is needed to make player inactive
                                         //potentially adding a flag to connInfoT that would allow us to skip that player for a turn
                                         //need to make sure it still allow that player to get broadcast messages
+
                                         msg.chCode = CMD_ACCUSE_RSP;
                                         memcpy(msg.szMsg, nBuf, 4);
+                                        (vecPlayers.at(player))->bInactive = true; //player becomes inactive
+                                        std::cout << "Player " << (vecPlayers.at(player))->player << " lost game and now becomes inactive." << std::endl;
                                     }
 
                                     std::vector<pconnInfoT>::iterator iter1 = vecPlayers.begin();
@@ -262,7 +266,7 @@ void game(std::vector<pconnInfoT> vecPlayers)
                                 }
                                 case CMD_TURN_OVER:
                                 {
-				                  std::cout << "Players " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
+				                  std::cout << "Player's " << (vecPlayers.at(player))->player << " turn is over" << std::endl;
                                   bTurn = false;                             // signal turn is over
                                 }
                                 default:

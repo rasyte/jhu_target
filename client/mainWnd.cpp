@@ -480,7 +480,7 @@ void mainWnd::doAccuseRsp(QByteArray qba)
     int weapon = qba.at(2) - '0';
     int room = qba.at(3) - '0';
 
-    QString strHtml = QString("%1 correctly accused %2 of killing Mr. Boddy in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    QString strHtml = QString("%1 incorrectly accused %2 of killing Mr. Boddy in the %3 with the %4\n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
     m_txtState->moveCursor(QTextCursor::End);
     m_txtState->insertPlainText(strHtml);
 
@@ -494,7 +494,7 @@ void mainWnd::doGameOver(QByteArray qba)
     int room = qba.at(3) - '0';
 
     //TODO: add accusation details to the the message (player who won (avatar), suspect, weapon and room. 
-    QString strHtml = QString("%1 correctly accused %2 of killing Mr. Boddy in the %3 with the %4.\n\n Game Over! \n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
+    QString strHtml = QString("%1 correctly accused %2 of killing Mr. Boddy in the %3 with the %4.\nGame Over! \n\n").arg(lpszSuspects[avatar]).arg(lpszSuspects[suspect]).arg(lpszRooms[room]).arg(lpszWeapons[weapon]);
     m_txtState->moveCursor(QTextCursor::End);
     m_txtState->insertPlainText(strHtml);
 }

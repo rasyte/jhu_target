@@ -24,6 +24,7 @@ typedef struct _connInfo
     int                   connfd;
     int                   player;
     int                   avatar;
+    bool                  bInactive; 
     std::vector<char>     cards;
     struct   sockaddr_in  cliAddr;
 } connInfoT, *pconnInfoT;
